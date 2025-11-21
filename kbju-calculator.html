@@ -591,6 +591,18 @@
                 <span class="result-value" id="carbsResult">0 г</span>
             </div>
 
+            <div class="result-item" style="border-top: 2px solid rgba(0, 0, 0, 0.1); padding-top: 15px; margin-top: 10px;">
+                <span class="result-label">Индекс массы тела (ИМТ):</span>
+                <span class="result-value" id="bmiResult" style="font-size: 1.3em;">0</span>
+            </div>
+
+            <div id="bmiStatus" style="text-align: center; margin: 15px 0; padding: 10px; border-radius: 8px; font-weight: 600;"></div>
+
+            <div id="weightRecommendation" style="background: #f0f8ff; padding: 15px; border-radius: 8px; margin-top: 15px; display: none;">
+                <strong style="color: #2c3e50;">💡 Рекомендация по весу:</strong>
+                <div id="weightAdvice" style="margin-top: 10px; line-height: 1.6;"></div>
+            </div>
+
             <div class="info">
                 <strong>Базовый обмен веществ (BMR):</strong> <span id="bmrResult">0</span> ккал<br>
                 <strong>Общий расход (TDEE):</strong> <span id="tdeeResult">0</span> ккал<br><br>
@@ -909,59 +921,59 @@
 
         const productsDatabase = [
             // Белковые продукты
-            { name: "Куриная грудка", image: "https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=400&h=300&fit=crop", calories: 165, protein: 31, fat: 3.6, carbs: 0, per: "100г", category: "protein" },
-            { name: "Яйца", image: "https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?w=400&h=300&fit=crop", calories: 155, protein: 13, fat: 11, carbs: 1.1, per: "100г", category: "protein" },
-            { name: "Лосось", image: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=400&h=300&fit=crop", calories: 208, protein: 20, fat: 13, carbs: 0, per: "100г", category: "protein" },
-            { name: "Тунец", image: "https://images.unsplash.com/photo-1580476262798-bddd9f4b7369?w=400&h=300&fit=crop", calories: 130, protein: 28, fat: 1.3, carbs: 0, per: "100г", category: "protein" },
-            { name: "Индейка", image: "https://images.unsplash.com/photo-1629978445884-c3926c348cfc?w=400&h=300&fit=crop", calories: 189, protein: 29, fat: 7, carbs: 0, per: "100г", category: "protein" },
-            { name: "Говядина", image: "https://images.unsplash.com/photo-1588347818036-78d37ce8e275?w=400&h=300&fit=crop", calories: 250, protein: 26, fat: 15, carbs: 0, per: "100г", category: "protein" },
-            { name: "Креветки", image: "https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?w=400&h=300&fit=crop", calories: 99, protein: 24, fat: 0.3, carbs: 0.2, per: "100г", category: "protein" },
-            { name: "Творог 5%", image: "https://images.unsplash.com/photo-1628088062854-d1870b4553da?w=400&h=300&fit=crop", calories: 121, protein: 16, fat: 5, carbs: 3, per: "100г", category: "dairy" },
+            { name: "Куриная грудка", image: "https://images.unsplash.com/photo-1587593810167-a84920ea0781?w=400&h=300&fit=crop", calories: 165, protein: 31, fat: 3.6, carbs: 0, per: "100г", category: "protein" },
+            { name: "Яйца", image: "https://images.unsplash.com/photo-1518569656558-1f25e69d93d7?w=400&h=300&fit=crop", calories: 155, protein: 13, fat: 11, carbs: 1.1, per: "100г", category: "protein" },
+            { name: "Лосось", image: "https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=400&h=300&fit=crop", calories: 208, protein: 20, fat: 13, carbs: 0, per: "100г", category: "protein" },
+            { name: "Тунец", image: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=400&h=300&fit=crop", calories: 130, protein: 28, fat: 1.3, carbs: 0, per: "100г", category: "protein" },
+            { name: "Индейка", image: "https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=400&h=300&fit=crop", calories: 189, protein: 29, fat: 7, carbs: 0, per: "100г", category: "protein" },
+            { name: "Говядина", image: "https://images.unsplash.com/photo-1603048588665-791ca8eff207?w=400&h=300&fit=crop", calories: 250, protein: 26, fat: 15, carbs: 0, per: "100г", category: "protein" },
+            { name: "Креветки", image: "https://images.unsplash.com/photo-1599084993091-1cb5c0721cc6?w=400&h=300&fit=crop", calories: 99, protein: 24, fat: 0.3, carbs: 0.2, per: "100г", category: "protein" },
+            { name: "Творог 5%", image: "https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?w=400&h=300&fit=crop", calories: 121, protein: 16, fat: 5, carbs: 3, per: "100г", category: "dairy" },
 
             // Углеводы
-            { name: "Овсянка", image: "https://images.unsplash.com/photo-1517673132405-a56a62b18caf?w=400&h=300&fit=crop", calories: 389, protein: 17, fat: 6.9, carbs: 66, per: "100г", category: "carbs" },
-            { name: "Гречка", image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400&h=300&fit=crop", calories: 343, protein: 13, fat: 3.4, carbs: 72, per: "100г", category: "carbs" },
-            { name: "Рис бурый", image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400&h=300&fit=crop", calories: 370, protein: 7.9, fat: 2.9, carbs: 77, per: "100г", category: "carbs" },
-            { name: "Киноа", image: "https://images.unsplash.com/photo-1586444248902-2f64eddc13df?w=400&h=300&fit=crop", calories: 368, protein: 14, fat: 6, carbs: 64, per: "100г", category: "carbs" },
-            { name: "Макароны", image: "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=400&h=300&fit=crop", calories: 371, protein: 13, fat: 1.5, carbs: 75, per: "100г", category: "carbs" },
-            { name: "Хлеб ц/з", image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400&h=300&fit=crop", calories: 247, protein: 13, fat: 4, carbs: 42, per: "100г", category: "carbs" },
-            { name: "Батат", image: "https://images.unsplash.com/photo-1589927986089-35812378d138?w=400&h=300&fit=crop", calories: 86, protein: 1.6, fat: 0.1, carbs: 20, per: "100г", category: "carbs" },
+            { name: "Овсянка", image: "https://images.unsplash.com/photo-1574085733277-851d9d856a0a?w=400&h=300&fit=crop", calories: 389, protein: 17, fat: 6.9, carbs: 66, per: "100г", category: "carbs" },
+            { name: "Гречка", image: "https://images.unsplash.com/photo-1607672632458-9eb56696346b?w=400&h=300&fit=crop", calories: 343, protein: 13, fat: 3.4, carbs: 72, per: "100г", category: "carbs" },
+            { name: "Рис бурый", image: "https://images.unsplash.com/photo-1536304993881-ff6e9eefa2a6?w=400&h=300&fit=crop", calories: 370, protein: 7.9, fat: 2.9, carbs: 77, per: "100г", category: "carbs" },
+            { name: "Киноа", image: "https://images.unsplash.com/photo-1628197524841-50c1f4ed97b6?w=400&h=300&fit=crop", calories: 368, protein: 14, fat: 6, carbs: 64, per: "100г", category: "carbs" },
+            { name: "Макароны", image: "https://images.unsplash.com/photo-1551462147-37a42fa2d0b1?w=400&h=300&fit=crop", calories: 371, protein: 13, fat: 1.5, carbs: 75, per: "100г", category: "carbs" },
+            { name: "Хлеб ц/з", image: "https://images.unsplash.com/photo-1586444248902-2f64eddc13df?w=400&h=300&fit=crop", calories: 247, protein: 13, fat: 4, carbs: 42, per: "100г", category: "carbs" },
+            { name: "Батат", image: "https://images.unsplash.com/photo-1591205863714-b5d8c6dbb90c?w=400&h=300&fit=crop", calories: 86, protein: 1.6, fat: 0.1, carbs: 20, per: "100г", category: "carbs" },
 
             // Овощи
-            { name: "Брокколи", image: "https://images.unsplash.com/photo-1459411621453-7b03977f4bfc?w=400&h=300&fit=crop", calories: 34, protein: 2.8, fat: 0.4, carbs: 7, per: "100г", category: "vegetables" },
-            { name: "Шпинат", image: "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=400&h=300&fit=crop", calories: 23, protein: 2.9, fat: 0.4, carbs: 3.6, per: "100г", category: "vegetables" },
-            { name: "Помидоры", image: "https://images.unsplash.com/photo-1546470427-227e3024e16c?w=400&h=300&fit=crop", calories: 18, protein: 0.9, fat: 0.2, carbs: 3.9, per: "100г", category: "vegetables" },
-            { name: "Огурцы", image: "https://images.unsplash.com/photo-1604977042946-1eecc30f269e?w=400&h=300&fit=crop", calories: 15, protein: 0.8, fat: 0.1, carbs: 3.6, per: "100г", category: "vegetables" },
-            { name: "Перец болгарский", image: "https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?w=400&h=300&fit=crop", calories: 27, protein: 1.3, fat: 0.3, carbs: 6, per: "100г", category: "vegetables" },
-            { name: "Морковь", image: "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=400&h=300&fit=crop", calories: 41, protein: 0.9, fat: 0.2, carbs: 10, per: "100г", category: "vegetables" },
-            { name: "Капуста", image: "https://images.unsplash.com/photo-1594282486552-05b4d80fbb9f?w=400&h=300&fit=crop", calories: 25, protein: 1.3, fat: 0.1, carbs: 5.8, per: "100г", category: "vegetables" },
-            { name: "Спаржа", image: "https://images.unsplash.com/photo-1550870691-655dc698781e?w=400&h=300&fit=crop", calories: 20, protein: 2.2, fat: 0.1, carbs: 3.9, per: "100г", category: "vegetables" },
+            { name: "Брокколи", image: "https://images.unsplash.com/photo-1628773822503-930a7eaecf80?w=400&h=300&fit=crop", calories: 34, protein: 2.8, fat: 0.4, carbs: 7, per: "100г", category: "vegetables" },
+            { name: "Шпинат", image: "https://images.unsplash.com/photo-1606914469633-bd39206ea739?w=400&h=300&fit=crop", calories: 23, protein: 2.9, fat: 0.4, carbs: 3.6, per: "100г", category: "vegetables" },
+            { name: "Помидоры", image: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=400&h=300&fit=crop", calories: 18, protein: 0.9, fat: 0.2, carbs: 3.9, per: "100г", category: "vegetables" },
+            { name: "Огурцы", image: "https://images.unsplash.com/photo-1568584711271-ca18cb8bc1f9?w=400&h=300&fit=crop", calories: 15, protein: 0.8, fat: 0.1, carbs: 3.6, per: "100г", category: "vegetables" },
+            { name: "Перец болгарский", image: "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?w=400&h=300&fit=crop", calories: 27, protein: 1.3, fat: 0.3, carbs: 6, per: "100г", category: "vegetables" },
+            { name: "Морковь", image: "https://images.unsplash.com/photo-1447175008436-054170c2e979?w=400&h=300&fit=crop", calories: 41, protein: 0.9, fat: 0.2, carbs: 10, per: "100г", category: "vegetables" },
+            { name: "Капуста", image: "https://images.unsplash.com/photo-1618164435735-413d3b066c9a?w=400&h=300&fit=crop", calories: 25, protein: 1.3, fat: 0.1, carbs: 5.8, per: "100г", category: "vegetables" },
+            { name: "Спаржа", image: "https://images.unsplash.com/photo-1597351294567-96c0f1f6d133?w=400&h=300&fit=crop", calories: 20, protein: 2.2, fat: 0.1, carbs: 3.9, per: "100г", category: "vegetables" },
 
             // Фрукты
-            { name: "Яблоко", image: "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=400&h=300&fit=crop", calories: 52, protein: 0.3, fat: 0.2, carbs: 14, per: "100г", category: "fruits" },
-            { name: "Банан", image: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=400&h=300&fit=crop", calories: 89, protein: 1.1, fat: 0.3, carbs: 23, per: "100г", category: "fruits" },
-            { name: "Апельсин", image: "https://images.unsplash.com/photo-1547514701-42782101795e?w=400&h=300&fit=crop", calories: 47, protein: 0.9, fat: 0.1, carbs: 12, per: "100г", category: "fruits" },
-            { name: "Ягоды", image: "https://images.unsplash.com/photo-1498557850523-fd3d118b962e?w=400&h=300&fit=crop", calories: 57, protein: 0.7, fat: 0.3, carbs: 14, per: "100г", category: "fruits" },
-            { name: "Груша", image: "https://images.unsplash.com/photo-1568633066542-5b94e8e0d906?w=400&h=300&fit=crop", calories: 57, protein: 0.4, fat: 0.1, carbs: 15, per: "100г", category: "fruits" },
-            { name: "Киви", image: "https://images.unsplash.com/photo-1588167058327-6b9a403d6e30?w=400&h=300&fit=crop", calories: 61, protein: 1.1, fat: 0.5, carbs: 15, per: "100г", category: "fruits" },
+            { name: "Яблоко", image: "https://images.unsplash.com/photo-1619546813926-a78fa6372cd2?w=400&h=300&fit=crop", calories: 52, protein: 0.3, fat: 0.2, carbs: 14, per: "100г", category: "fruits" },
+            { name: "Банан", image: "https://images.unsplash.com/photo-1603833665858-e61d17a86224?w=400&h=300&fit=crop", calories: 89, protein: 1.1, fat: 0.3, carbs: 23, per: "100г", category: "fruits" },
+            { name: "Апельсин", image: "https://images.unsplash.com/photo-1580052614034-c55d20bfee3b?w=400&h=300&fit=crop", calories: 47, protein: 0.9, fat: 0.1, carbs: 12, per: "100г", category: "fruits" },
+            { name: "Ягоды", image: "https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=400&h=300&fit=crop", calories: 57, protein: 0.7, fat: 0.3, carbs: 14, per: "100г", category: "fruits" },
+            { name: "Груша", image: "https://images.unsplash.com/photo-1615484477778-ca3b77940c25?w=400&h=300&fit=crop", calories: 57, protein: 0.4, fat: 0.1, carbs: 15, per: "100г", category: "fruits" },
+            { name: "Киви", image: "https://images.unsplash.com/photo-1618897996318-5a901fa6ca71?w=400&h=300&fit=crop", calories: 61, protein: 1.1, fat: 0.5, carbs: 15, per: "100г", category: "fruits" },
 
             // Молочные продукты
-            { name: "Йогурт греческий", image: "https://images.unsplash.com/photo-1488477181946-6428a0291777?w=400&h=300&fit=crop", calories: 59, protein: 10, fat: 0.4, carbs: 3.6, per: "100г", category: "dairy" },
-            { name: "Молоко 2.5%", image: "https://images.unsplash.com/photo-1563636619-e9143da7973b?w=400&h=300&fit=crop", calories: 52, protein: 2.8, fat: 2.5, carbs: 4.7, per: "100мл", category: "dairy" },
-            { name: "Кефир 1%", image: "https://images.unsplash.com/photo-1625937286074-9ca519d5d9df?w=400&h=300&fit=crop", calories: 40, protein: 3, fat: 1, carbs: 4, per: "100мл", category: "dairy" },
-            { name: "Сметана 10%", image: "https://images.unsplash.com/photo-1628088062854-d1870b4553da?w=400&h=300&fit=crop", calories: 115, protein: 3, fat: 10, carbs: 3, per: "100г", category: "dairy" },
-            { name: "Сыр моцарелла", image: "https://images.unsplash.com/photo-1618164436241-4473940d1f5c?w=400&h=300&fit=crop", calories: 280, protein: 28, fat: 17, carbs: 3, per: "100г", category: "dairy" },
+            { name: "Йогурт греческий", image: "https://images.unsplash.com/photo-1571212515416-fca2ce30f2a6?w=400&h=300&fit=crop", calories: 59, protein: 10, fat: 0.4, carbs: 3.6, per: "100г", category: "dairy" },
+            { name: "Молоко 2.5%", image: "https://images.unsplash.com/photo-1550583724-b2692b85b150?w=400&h=300&fit=crop", calories: 52, protein: 2.8, fat: 2.5, carbs: 4.7, per: "100мл", category: "dairy" },
+            { name: "Кефир 1%", image: "https://images.unsplash.com/photo-1563835796418-c4a1e6b4e8b0?w=400&h=300&fit=crop", calories: 40, protein: 3, fat: 1, carbs: 4, per: "100мл", category: "dairy" },
+            { name: "Сметана 10%", image: "https://images.unsplash.com/photo-1605522324893-75e6f8e3b212?w=400&h=300&fit=crop", calories: 115, protein: 3, fat: 10, carbs: 3, per: "100г", category: "dairy" },
+            { name: "Сыр моцарелла", image: "https://images.unsplash.com/photo-1631670662959-c3535e6d8713?w=400&h=300&fit=crop", calories: 280, protein: 28, fat: 17, carbs: 3, per: "100г", category: "dairy" },
 
             // Орехи и семена
-            { name: "Миндаль", image: "https://images.unsplash.com/photo-1508258710278-c86c8d7f4bf1?w=400&h=300&fit=crop", calories: 579, protein: 21, fat: 50, carbs: 22, per: "100г", category: "nuts" },
-            { name: "Грецкие орехи", image: "https://images.unsplash.com/photo-1622921908432-7f0cd3d25e8e?w=400&h=300&fit=crop", calories: 654, protein: 15, fat: 65, carbs: 14, per: "100г", category: "nuts" },
-            { name: "Кешью", image: "https://images.unsplash.com/photo-1585704032915-c3400ca199e7?w=400&h=300&fit=crop", calories: 553, protein: 18, fat: 44, carbs: 30, per: "100г", category: "nuts" },
-            { name: "Семена чиа", image: "https://images.unsplash.com/photo-1603569283847-aa295f0d016a?w=400&h=300&fit=crop", calories: 486, protein: 17, fat: 31, carbs: 42, per: "100г", category: "nuts" },
-            { name: "Арахис", image: "https://images.unsplash.com/photo-1582523628550-edb8b57e01ba?w=400&h=300&fit=crop", calories: 567, protein: 26, fat: 49, carbs: 16, per: "100г", category: "nuts" },
+            { name: "Миндаль", image: "https://images.unsplash.com/photo-1617561458774-a8f96b6f0cde?w=400&h=300&fit=crop", calories: 579, protein: 21, fat: 50, carbs: 22, per: "100г", category: "nuts" },
+            { name: "Грецкие орехи", image: "https://images.unsplash.com/photo-1580317046849-44f59ce5f57f?w=400&h=300&fit=crop", calories: 654, protein: 15, fat: 65, carbs: 14, per: "100г", category: "nuts" },
+            { name: "Кешью", image: "https://images.unsplash.com/photo-1618192774387-f430f64ee2e5?w=400&h=300&fit=crop", calories: 553, protein: 18, fat: 44, carbs: 30, per: "100г", category: "nuts" },
+            { name: "Семена чиа", image: "https://images.unsplash.com/photo-1601492310362-38cc8de66b45?w=400&h=300&fit=crop", calories: 486, protein: 17, fat: 31, carbs: 42, per: "100г", category: "nuts" },
+            { name: "Арахис", image: "https://images.unsplash.com/photo-1607609234512-e683293c2f3c?w=400&h=300&fit=crop", calories: 567, protein: 26, fat: 49, carbs: 16, per: "100г", category: "nuts" },
 
             // Дополнительно
-            { name: "Авокадо", image: "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?w=400&h=300&fit=crop", calories: 160, protein: 2, fat: 15, carbs: 9, per: "100г", category: "vegetables" },
-            { name: "Оливковое масло", image: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=400&h=300&fit=crop", calories: 884, protein: 0, fat: 100, carbs: 0, per: "100мл", category: "nuts" },
+            { name: "Авокадо", image: "https://images.unsplash.com/photo-1601039641847-7857b994d704?w=400&h=300&fit=crop", calories: 160, protein: 2, fat: 15, carbs: 9, per: "100г", category: "vegetables" },
+            { name: "Оливковое масло", image: "https://images.unsplash.com/photo-1608181831030-dc2713c788cc?w=400&h=300&fit=crop", calories: 884, protein: 0, fat: 100, carbs: 0, per: "100мл", category: "nuts" },
         ];
 
         const weekMenu = {
@@ -1168,12 +1180,59 @@
             currentFat = fatGrams;
             currentCarbs = carbsGrams;
 
+            // Calculate BMI
+            const heightInMeters = height / 100;
+            const bmi = (weight / (heightInMeters * heightInMeters)).toFixed(1);
+
+            // Calculate ideal weight range (BMI 18.5-24.9)
+            const minIdealWeight = (18.5 * heightInMeters * heightInMeters).toFixed(1);
+            const maxIdealWeight = (24.9 * heightInMeters * heightInMeters).toFixed(1);
+
+            // Determine BMI status and color
+            let bmiStatus = '';
+            let bmiColor = '';
+            let weightAdvice = '';
+
+            if (bmi < 18.5) {
+                bmiStatus = 'Недостаточный вес';
+                bmiColor = '#3498db';
+                const needToGain = (minIdealWeight - weight).toFixed(1);
+                weightAdvice = `Вам рекомендуется <strong>набрать ${needToGain} кг</strong> для достижения нормального веса.<br>`;
+                weightAdvice += `Идеальный вес для вашего роста: <strong>${minIdealWeight} - ${maxIdealWeight} кг</strong>`;
+            } else if (bmi >= 18.5 && bmi <= 24.9) {
+                bmiStatus = 'Нормальный вес';
+                bmiColor = '#2ecc71';
+                weightAdvice = `Отлично! Ваш вес находится в пределах нормы.<br>`;
+                weightAdvice += `Продолжайте поддерживать здоровый образ жизни!`;
+            } else if (bmi >= 25 && bmi <= 29.9) {
+                bmiStatus = 'Избыточный вес';
+                bmiColor = '#f39c12';
+                const needToLose = (weight - maxIdealWeight).toFixed(1);
+                weightAdvice = `Вам рекомендуется <strong>снизить вес на ${needToLose} кг</strong> для достижения нормального веса.<br>`;
+                weightAdvice += `Идеальный вес для вашего роста: <strong>${minIdealWeight} - ${maxIdealWeight} кг</strong>`;
+            } else {
+                bmiStatus = 'Ожирение';
+                bmiColor = '#e74c3c';
+                const needToLose = (weight - maxIdealWeight).toFixed(1);
+                weightAdvice = `Вам рекомендуется <strong>снизить вес на ${needToLose} кг</strong> для достижения нормального веса.<br>`;
+                weightAdvice += `Идеальный вес для вашего роста: <strong>${minIdealWeight} - ${maxIdealWeight} кг</strong><br>`;
+                weightAdvice += `Рекомендуется проконсультироваться с врачом для составления индивидуального плана.`;
+            }
+
             document.getElementById('caloriesResult').textContent = targetCalories + ' ккал';
             document.getElementById('proteinResult').textContent = proteinGrams + ' г';
             document.getElementById('fatResult').textContent = fatGrams + ' г';
             document.getElementById('carbsResult').textContent = carbsGrams + ' г';
             document.getElementById('bmrResult').textContent = Math.round(bmr);
             document.getElementById('tdeeResult').textContent = Math.round(tdee);
+
+            // Display BMI results
+            document.getElementById('bmiResult').textContent = bmi;
+            document.getElementById('bmiStatus').textContent = bmiStatus;
+            document.getElementById('bmiStatus').style.backgroundColor = bmiColor;
+            document.getElementById('bmiStatus').style.color = 'white';
+            document.getElementById('weightAdvice').innerHTML = weightAdvice;
+            document.getElementById('weightRecommendation').style.display = 'block';
 
             document.getElementById('results').classList.add('show');
 
