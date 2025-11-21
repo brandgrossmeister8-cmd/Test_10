@@ -13,7 +13,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #808000 0%, #556B2F 100%);
             min-height: 100vh;
             padding: 20px;
             display: flex;
@@ -51,12 +51,12 @@
         }
 
         .tab:hover {
-            color: #667eea;
+            color: #6B8E23;
         }
 
         .tab.active {
-            color: #667eea;
-            border-bottom-color: #667eea;
+            color: #6B8E23;
+            border-bottom-color: #6B8E23;
         }
 
         .tab-content {
@@ -70,7 +70,7 @@
 
         h1 {
             text-align: center;
-            color: #667eea;
+            color: #6B8E23;
             margin-bottom: 30px;
             font-size: 2em;
         }
@@ -97,7 +97,7 @@
 
         input:focus, select:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: #6B8E23;
         }
 
         .radio-group {
@@ -126,7 +126,7 @@
         .calculate-btn {
             width: 100%;
             padding: 15px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #6B8E23 0%, #556B2F 100%);
             color: white;
             border: none;
             border-radius: 8px;
@@ -171,7 +171,7 @@
 
         .result-title {
             font-size: 1.5em;
-            color: #667eea;
+            color: #6B8E23;
             margin-bottom: 20px;
             text-align: center;
             font-weight: 700;
@@ -373,6 +373,134 @@
             color: #856404;
             line-height: 1.6;
         }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 150px;
+            position: relative;
+            overflow: hidden;
+            background: #f5f5f5;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.1);
+        }
+
+        .product-info {
+            padding: 15px;
+        }
+
+        .product-name {
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+
+        .product-calories {
+            color: #667eea;
+            font-weight: 600;
+            font-size: 1.1em;
+            margin-bottom: 8px;
+        }
+
+        .product-macros {
+            font-size: 0.85em;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        .category-filter {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            background: #f0f0f0;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover {
+            background: #e0e0e0;
+        }
+
+        .filter-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .meal-calories {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9em;
+            font-weight: 600;
+            margin-top: 5px;
+        }
+
+        .day-total {
+            background: #6B8E23;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: 700;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: #6B8E23;
+        }
     </style>
 </head>
 <body>
@@ -382,6 +510,7 @@
         <div class="tabs">
             <button class="tab active" onclick="switchTab('calculator')">Калькулятор</button>
             <button class="tab" onclick="switchTab('menu')">Меню на неделю</button>
+            <button class="tab" onclick="switchTab('products')">Продукты</button>
             <button class="tab" onclick="switchTab('exercises')">Упражнения</button>
             <button class="tab" onclick="switchTab('joints')">Суставы</button>
             <button class="tab" onclick="switchTab('stretching')">Растяжка</button>
@@ -471,7 +600,542 @@
         </div>
     </div>
 
+        <div id="menu" class="tab-content">
+            <h2 style="color: #6B8E23; margin-bottom: 20px;">Меню на неделю</h2>
+            <div class="warning-box">
+                <strong>⚠️ Важно:</strong> Меню является примерным. Калорийность блюд может варьироваться.
+                Используйте результаты калькулятора для подбора размера порций под ваши цели.
+            </div>
+
+            <div class="day-selector" id="daySelector">
+                <button class="day-btn active" onclick="showDay(1)">День 1</button>
+                <button class="day-btn" onclick="showDay(2)">День 2</button>
+                <button class="day-btn" onclick="showDay(3)">День 3</button>
+                <button class="day-btn" onclick="showDay(4)">День 4</button>
+                <button class="day-btn" onclick="showDay(5)">День 5</button>
+                <button class="day-btn" onclick="showDay(6)">День 6</button>
+                <button class="day-btn" onclick="showDay(7)">День 7</button>
+            </div>
+
+            <div id="menuContent"></div>
+        </div>
+
+        <div id="products" class="tab-content">
+            <h2 style="color: #6B8E23; margin-bottom: 20px;">База продуктов</h2>
+
+            <input type="text" class="search-box" id="productSearch" placeholder="🔍 Поиск продуктов..." oninput="filterProducts()">
+
+            <div class="category-filter">
+                <button class="filter-btn active" onclick="filterByCategory('all')">Все</button>
+                <button class="filter-btn" onclick="filterByCategory('protein')">Белки</button>
+                <button class="filter-btn" onclick="filterByCategory('carbs')">Углеводы</button>
+                <button class="filter-btn" onclick="filterByCategory('vegetables')">Овощи</button>
+                <button class="filter-btn" onclick="filterByCategory('fruits')">Фрукты</button>
+                <button class="filter-btn" onclick="filterByCategory('dairy')">Молочное</button>
+                <button class="filter-btn" onclick="filterByCategory('nuts')">Орехи</button>
+            </div>
+
+            <div class="product-grid" id="productGrid"></div>
+        </div>
+
+        <div id="exercises" class="tab-content">
+            <h2 style="color: #6B8E23; margin-bottom: 20px;">Упражнения для похудения и тонуса</h2>
+
+            <div class="exercise-section">
+                <div class="exercise-category">
+                    <h3>Кардио упражнения</h3>
+                    <div class="exercise-item">
+                        <div class="exercise-name">Бег на месте с высоким подниманием коленей</div>
+                        <div class="exercise-desc">Эффективное кардио упражнение для сжигания калорий и укрепления ног</div>
+                        <div class="exercise-reps">3 подхода по 30 секунд</div>
+                    </div>
+                    <div class="exercise-item">
+                        <div class="exercise-name">Прыжки "Джампинг Джекс"</div>
+                        <div class="exercise-desc">Классическое кардио для всего тела, улучшает выносливость</div>
+                        <div class="exercise-reps">3 подхода по 20 повторений</div>
+                    </div>
+                    <div class="exercise-item">
+                        <div class="exercise-name">Берпи</div>
+                        <div class="exercise-desc">Комплексное упражнение для всего тела, максимальное сжигание калорий</div>
+                        <div class="exercise-reps">3 подхода по 10-15 повторений</div>
+                    </div>
+                </div>
+
+                <div class="exercise-category">
+                    <h3>Силовые упражнения</h3>
+                    <div class="exercise-item">
+                        <div class="exercise-name">Приседания</div>
+                        <div class="exercise-desc">Базовое упражнение для ног и ягодиц, укрепляет нижнюю часть тела</div>
+                        <div class="exercise-reps">4 подхода по 15-20 повторений</div>
+                    </div>
+                    <div class="exercise-item">
+                        <div class="exercise-name">Отжимания</div>
+                        <div class="exercise-desc">Укрепляет грудь, плечи, трицепсы и кор</div>
+                        <div class="exercise-reps">3 подхода по 10-15 повторений (можно с коленей)</div>
+                    </div>
+                    <div class="exercise-item">
+                        <div class="exercise-name">Планка</div>
+                        <div class="exercise-desc">Изометрическое упражнение для укрепления кора и всего тела</div>
+                        <div class="exercise-reps">3 подхода по 30-60 секунд</div>
+                    </div>
+                    <div class="exercise-item">
+                        <div class="exercise-name">Выпады</div>
+                        <div class="exercise-desc">Отличное упражнение для ног, ягодиц и баланса</div>
+                        <div class="exercise-reps">3 подхода по 12 повторений на каждую ногу</div>
+                    </div>
+                </div>
+
+                <div class="exercise-category">
+                    <h3>Упражнения для пресса</h3>
+                    <div class="exercise-item">
+                        <div class="exercise-name">Скручивания</div>
+                        <div class="exercise-desc">Классическое упражнение для верхнего пресса</div>
+                        <div class="exercise-reps">3 подхода по 15-20 повторений</div>
+                    </div>
+                    <div class="exercise-item">
+                        <div class="exercise-name">Велосипед</div>
+                        <div class="exercise-desc">Динамическое упражнение для всех мышц пресса</div>
+                        <div class="exercise-reps">3 подхода по 20 повторений</div>
+                    </div>
+                    <div class="exercise-item">
+                        <div class="exercise-name">Подъем ног лежа</div>
+                        <div class="exercise-desc">Эффективно прорабатывает нижний пресс</div>
+                        <div class="exercise-reps">3 подхода по 12-15 повторений</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <strong>💡 Рекомендации:</strong>
+                <ul style="margin: 10px 0 0 20px;">
+                    <li>Начинайте с разминки 5-10 минут</li>
+                    <li>Отдыхайте 30-60 секунд между подходами</li>
+                    <li>Тренируйтесь 3-4 раза в неделю</li>
+                    <li>Постепенно увеличивайте нагрузку</li>
+                    <li>Следите за техникой выполнения</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="joints" class="tab-content">
+            <h2 style="color: #6B8E23; margin-bottom: 20px;">Упражнения для суставов</h2>
+
+            <div class="exercise-section">
+                <div class="exercise-category">
+                    <h3>Суставная гимнастика для шеи</h3>
+                    <div class="exercise-item">
+                        <div class="exercise-name">Повороты головы</div>
+                        <div class="exercise-desc">Медленно поворачивайте голову вправо и влево, улучшая подвижность шейных позвонков</div>
+                        <div class="exercise-reps">10 повторений в каждую сторону</div>
+                    </div>
+                    <div class="exercise-item">
+                        <div class="exercise-name">Наклоны головы</div>
+                        <div class="exercise-desc">Наклоняйте голову к плечу, вперед и назад</div>
+                        <div class="exercise-reps">8-10 повторений в каждом направлении</div>
+                    </div>
+                </div>
+
+                <div class="exercise-category">
+                    <h3>Суставная гимнастика для плеч</h3>
+                    <div class="exercise-item">
+                        <div class="exercise-name">Круговые вращения плечами</div>
+                        <div class="exercise-desc">Вращайте плечами вперед и назад, разогревая плечевые суставы</div>
+                        <div class="exercise-reps">15 вращений вперед, 15 назад</div>
+                    </div>
+                    <div class="exercise-item">
+                        <div class="exercise-name">Подъемы и опускания плеч</div>
+                        <div class="exercise-desc">Поднимайте плечи к ушам и опускайте вниз</div>
+                        <div class="exercise-reps">12-15 повторений</div>
+                    </div>
+                </div>
+
+                <div class="exercise-category">
+                    <h3>Суставная гимнастика для рук</h3>
+                    <div class="exercise-item">
+                        <div class="exercise-name">Вращения кистями</div>
+                        <div class="exercise-desc">Круговые движения кистями в обе стороны</div>
+                        <div class="exercise-reps">10 вращений в каждую сторону</div>
+                    </div>
+                    <div class="exercise-item">
+                        <div class="exercise-name">Вращения локтями</div>
+                        <div class="exercise-desc">Согните руки в локтях и делайте круговые движения</div>
+                        <div class="exercise-reps">10 вращений в каждую сторону</div>
+                    </div>
+                </div>
+
+                <div class="exercise-category">
+                    <h3>Суставная гимнастика для позвоночника</h3>
+                    <div class="exercise-item">
+                        <div class="exercise-name">Скручивания корпуса</div>
+                        <div class="exercise-desc">Стоя, руки на поясе, поворачивайте корпус вправо и влево</div>
+                        <div class="exercise-reps">12-15 поворотов в каждую сторону</div>
+                    </div>
+                    <div class="exercise-item">
+                        <div class="exercise-name">Наклоны в стороны</div>
+                        <div class="exercise-desc">Наклоняйтесь в стороны, растягивая боковые мышцы</div>
+                        <div class="exercise-reps">10 наклонов в каждую сторону</div>
+                    </div>
+                </div>
+
+                <div class="exercise-category">
+                    <h3>Суставная гимнастика для ног</h3>
+                    <div class="exercise-item">
+                        <div class="exercise-name">Вращения стопами</div>
+                        <div class="exercise-desc">Поднимите ногу и делайте круговые движения стопой</div>
+                        <div class="exercise-reps">10 вращений каждой стопой в обе стороны</div>
+                    </div>
+                    <div class="exercise-item">
+                        <div class="exercise-name">Вращения в коленях</div>
+                        <div class="exercise-desc">Слегка присев, руки на коленях, делайте круговые движения коленями</div>
+                        <div class="exercise-reps">10 вращений в каждую сторону</div>
+                    </div>
+                    <div class="exercise-item">
+                        <div class="exercise-name">Вращения в тазобедренных суставах</div>
+                        <div class="exercise-desc">Стоя на одной ноге, делайте круговые движения другой ногой</div>
+                        <div class="exercise-reps">8-10 вращений каждой ногой</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <strong>💡 Важные правила:</strong>
+                <ul style="margin: 10px 0 0 20px;">
+                    <li>Выполняйте упражнения медленно и плавно</li>
+                    <li>Не делайте резких движений</li>
+                    <li>Дышите ровно, не задерживайте дыхание</li>
+                    <li>Выполняйте суставную гимнастику ежедневно, желательно утром</li>
+                    <li>При боли немедленно прекратите упражнение</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="stretching" class="tab-content">
+            <h2 style="color: #6B8E23; margin-bottom: 20px;">Растяжка (Стретчинг)</h2>
+
+            <div class="exercise-section">
+                <div class="exercise-category">
+                    <h3>Растяжка шеи и плеч</h3>
+                    <div class="exercise-item">
+                        <div class="exercise-name">Растяжка боковых мышц шеи</div>
+                        <div class="exercise-desc">Наклоните голову к плечу, мягко помогая рукой. Почувствуйте растяжение противоположной стороны</div>
+                        <div class="exercise-reps">Удерживайте 20-30 секунд на каждую сторону</div>
+                    </div>
+                    <div class="exercise-item">
+                        <div class="exercise-name">Растяжка плеч и трицепсов</div>
+                        <div class="exercise-desc">Заведите руку за голову, другой рукой мягко тяните локоть</div>
+                        <div class="exercise-reps">20-30 секунд на каждую руку</div>
+                    </div>
+                </div>
+
+                <div class="exercise-category">
+                    <h3>Растяжка спины</h3>
+                    <div class="exercise-item">
+                        <div class="exercise-name">Поза кошки-коровы</div>
+                        <div class="exercise-desc">На четвереньках прогибайте и округляйте спину, растягивая позвоночник</div>
+                        <div class="exercise-reps">10-12 повторений медленно</div>
+                    </div>
+                    <div class="exercise-item">
+                        <div class="exercise-name">Поза ребенка</div>
+                        <div class="exercise-desc">Сядьте на пятки, наклонитесь вперед, вытягивая руки. Расслабьте спину</div>
+                        <div class="exercise-reps">Удерживайте 30-60 секунд</div>
+                    </div>
+                    <div class="exercise-item">
+                        <div class="exercise-name">Скручивание лежа</div>
+                        <div class="exercise-desc">Лежа на спине, согните колени и опустите их в сторону, растягивая спину</div>
+                        <div class="exercise-reps">30 секунд на каждую сторону</div>
+                    </div>
+                </div>
+
+                <div class="exercise-category">
+                    <h3>Растяжка ног</h3>
+                    <div class="exercise-item">
+                        <div class="exercise-name">Растяжка задней поверхности бедра</div>
+                        <div class="exercise-desc">Сидя, вытяните ноги, тянитесь руками к носкам, держа спину прямо</div>
+                        <div class="exercise-reps">30-40 секунд</div>
+                    </div>
+                    <div class="exercise-item">
+                        <div class="exercise-name">Растяжка квадрицепса</div>
+                        <div class="exercise-desc">Стоя на одной ноге, согните другую назад и держите рукой за стопу</div>
+                        <div class="exercise-reps">30 секунд на каждую ногу</div>
+                    </div>
+                    <div class="exercise-item">
+                        <div class="exercise-name">Выпад с растяжкой</div>
+                        <div class="exercise-desc">Сделайте выпад вперед, опустив заднее колено. Растягивает бедра и пах</div>
+                        <div class="exercise-reps">30 секунд на каждую ногу</div>
+                    </div>
+                    <div class="exercise-item">
+                        <div class="exercise-name">Растяжка икроножных мышц</div>
+                        <div class="exercise-desc">Упритесь руками в стену, отставив одну ногу назад, пятка на полу</div>
+                        <div class="exercise-reps">30 секунд на каждую ногу</div>
+                    </div>
+                </div>
+
+                <div class="exercise-category">
+                    <h3>Растяжка всего тела</h3>
+                    <div class="exercise-item">
+                        <div class="exercise-name">Поза собаки мордой вниз</div>
+                        <div class="exercise-desc">Из положения планки поднимите таз вверх, растягивая всю заднюю цепь мышц</div>
+                        <div class="exercise-reps">30-45 секунд</div>
+                    </div>
+                    <div class="exercise-item">
+                        <div class="exercise-name">Боковая растяжка стоя</div>
+                        <div class="exercise-desc">Поднимите одну руку вверх и наклонитесь в противоположную сторону</div>
+                        <div class="exercise-reps">20-30 секунд на каждую сторону</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <strong>💡 Правила безопасной растяжки:</strong>
+                <ul style="margin: 10px 0 0 20px;">
+                    <li>Всегда разогревайтесь перед растяжкой (5-10 минут легкого кардио)</li>
+                    <li>Растягивайтесь плавно, без резких движений и рывков</li>
+                    <li>Дышите глубоко и ровно, не задерживайте дыхание</li>
+                    <li>Растяжка должна быть приятной, без сильной боли</li>
+                    <li>Держите каждую позицию 20-30 секунд минимум</li>
+                    <li>Растягивайтесь регулярно, желательно после тренировок</li>
+                    <li>Не пружиньте в конечной точке растяжки</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
     <script>
+        let currentCalories = 0;
+        let currentProtein = 0;
+        let currentFat = 0;
+        let currentCarbs = 0;
+        let currentCategory = 'all';
+
+        const productsDatabase = [
+            // Белковые продукты
+            { name: "Куриная грудка", image: "https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=400&h=300&fit=crop", calories: 165, protein: 31, fat: 3.6, carbs: 0, per: "100г", category: "protein" },
+            { name: "Яйца", image: "https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?w=400&h=300&fit=crop", calories: 155, protein: 13, fat: 11, carbs: 1.1, per: "100г", category: "protein" },
+            { name: "Лосось", image: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=400&h=300&fit=crop", calories: 208, protein: 20, fat: 13, carbs: 0, per: "100г", category: "protein" },
+            { name: "Тунец", image: "https://images.unsplash.com/photo-1580476262798-bddd9f4b7369?w=400&h=300&fit=crop", calories: 130, protein: 28, fat: 1.3, carbs: 0, per: "100г", category: "protein" },
+            { name: "Индейка", image: "https://images.unsplash.com/photo-1629978445884-c3926c348cfc?w=400&h=300&fit=crop", calories: 189, protein: 29, fat: 7, carbs: 0, per: "100г", category: "protein" },
+            { name: "Говядина", image: "https://images.unsplash.com/photo-1588347818036-78d37ce8e275?w=400&h=300&fit=crop", calories: 250, protein: 26, fat: 15, carbs: 0, per: "100г", category: "protein" },
+            { name: "Креветки", image: "https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?w=400&h=300&fit=crop", calories: 99, protein: 24, fat: 0.3, carbs: 0.2, per: "100г", category: "protein" },
+            { name: "Творог 5%", image: "https://images.unsplash.com/photo-1628088062854-d1870b4553da?w=400&h=300&fit=crop", calories: 121, protein: 16, fat: 5, carbs: 3, per: "100г", category: "dairy" },
+
+            // Углеводы
+            { name: "Овсянка", image: "https://images.unsplash.com/photo-1517673132405-a56a62b18caf?w=400&h=300&fit=crop", calories: 389, protein: 17, fat: 6.9, carbs: 66, per: "100г", category: "carbs" },
+            { name: "Гречка", image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400&h=300&fit=crop", calories: 343, protein: 13, fat: 3.4, carbs: 72, per: "100г", category: "carbs" },
+            { name: "Рис бурый", image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400&h=300&fit=crop", calories: 370, protein: 7.9, fat: 2.9, carbs: 77, per: "100г", category: "carbs" },
+            { name: "Киноа", image: "https://images.unsplash.com/photo-1586444248902-2f64eddc13df?w=400&h=300&fit=crop", calories: 368, protein: 14, fat: 6, carbs: 64, per: "100г", category: "carbs" },
+            { name: "Макароны", image: "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=400&h=300&fit=crop", calories: 371, protein: 13, fat: 1.5, carbs: 75, per: "100г", category: "carbs" },
+            { name: "Хлеб ц/з", image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400&h=300&fit=crop", calories: 247, protein: 13, fat: 4, carbs: 42, per: "100г", category: "carbs" },
+            { name: "Батат", image: "https://images.unsplash.com/photo-1589927986089-35812378d138?w=400&h=300&fit=crop", calories: 86, protein: 1.6, fat: 0.1, carbs: 20, per: "100г", category: "carbs" },
+
+            // Овощи
+            { name: "Брокколи", image: "https://images.unsplash.com/photo-1459411621453-7b03977f4bfc?w=400&h=300&fit=crop", calories: 34, protein: 2.8, fat: 0.4, carbs: 7, per: "100г", category: "vegetables" },
+            { name: "Шпинат", image: "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=400&h=300&fit=crop", calories: 23, protein: 2.9, fat: 0.4, carbs: 3.6, per: "100г", category: "vegetables" },
+            { name: "Помидоры", image: "https://images.unsplash.com/photo-1546470427-227e3024e16c?w=400&h=300&fit=crop", calories: 18, protein: 0.9, fat: 0.2, carbs: 3.9, per: "100г", category: "vegetables" },
+            { name: "Огурцы", image: "https://images.unsplash.com/photo-1604977042946-1eecc30f269e?w=400&h=300&fit=crop", calories: 15, protein: 0.8, fat: 0.1, carbs: 3.6, per: "100г", category: "vegetables" },
+            { name: "Перец болгарский", image: "https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?w=400&h=300&fit=crop", calories: 27, protein: 1.3, fat: 0.3, carbs: 6, per: "100г", category: "vegetables" },
+            { name: "Морковь", image: "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=400&h=300&fit=crop", calories: 41, protein: 0.9, fat: 0.2, carbs: 10, per: "100г", category: "vegetables" },
+            { name: "Капуста", image: "https://images.unsplash.com/photo-1594282486552-05b4d80fbb9f?w=400&h=300&fit=crop", calories: 25, protein: 1.3, fat: 0.1, carbs: 5.8, per: "100г", category: "vegetables" },
+            { name: "Спаржа", image: "https://images.unsplash.com/photo-1550870691-655dc698781e?w=400&h=300&fit=crop", calories: 20, protein: 2.2, fat: 0.1, carbs: 3.9, per: "100г", category: "vegetables" },
+
+            // Фрукты
+            { name: "Яблоко", image: "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=400&h=300&fit=crop", calories: 52, protein: 0.3, fat: 0.2, carbs: 14, per: "100г", category: "fruits" },
+            { name: "Банан", image: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=400&h=300&fit=crop", calories: 89, protein: 1.1, fat: 0.3, carbs: 23, per: "100г", category: "fruits" },
+            { name: "Апельсин", image: "https://images.unsplash.com/photo-1547514701-42782101795e?w=400&h=300&fit=crop", calories: 47, protein: 0.9, fat: 0.1, carbs: 12, per: "100г", category: "fruits" },
+            { name: "Ягоды", image: "https://images.unsplash.com/photo-1498557850523-fd3d118b962e?w=400&h=300&fit=crop", calories: 57, protein: 0.7, fat: 0.3, carbs: 14, per: "100г", category: "fruits" },
+            { name: "Груша", image: "https://images.unsplash.com/photo-1568633066542-5b94e8e0d906?w=400&h=300&fit=crop", calories: 57, protein: 0.4, fat: 0.1, carbs: 15, per: "100г", category: "fruits" },
+            { name: "Киви", image: "https://images.unsplash.com/photo-1588167058327-6b9a403d6e30?w=400&h=300&fit=crop", calories: 61, protein: 1.1, fat: 0.5, carbs: 15, per: "100г", category: "fruits" },
+
+            // Молочные продукты
+            { name: "Йогурт греческий", image: "https://images.unsplash.com/photo-1488477181946-6428a0291777?w=400&h=300&fit=crop", calories: 59, protein: 10, fat: 0.4, carbs: 3.6, per: "100г", category: "dairy" },
+            { name: "Молоко 2.5%", image: "https://images.unsplash.com/photo-1563636619-e9143da7973b?w=400&h=300&fit=crop", calories: 52, protein: 2.8, fat: 2.5, carbs: 4.7, per: "100мл", category: "dairy" },
+            { name: "Кефир 1%", image: "https://images.unsplash.com/photo-1625937286074-9ca519d5d9df?w=400&h=300&fit=crop", calories: 40, protein: 3, fat: 1, carbs: 4, per: "100мл", category: "dairy" },
+            { name: "Сметана 10%", image: "https://images.unsplash.com/photo-1628088062854-d1870b4553da?w=400&h=300&fit=crop", calories: 115, protein: 3, fat: 10, carbs: 3, per: "100г", category: "dairy" },
+            { name: "Сыр моцарелла", image: "https://images.unsplash.com/photo-1618164436241-4473940d1f5c?w=400&h=300&fit=crop", calories: 280, protein: 28, fat: 17, carbs: 3, per: "100г", category: "dairy" },
+
+            // Орехи и семена
+            { name: "Миндаль", image: "https://images.unsplash.com/photo-1508258710278-c86c8d7f4bf1?w=400&h=300&fit=crop", calories: 579, protein: 21, fat: 50, carbs: 22, per: "100г", category: "nuts" },
+            { name: "Грецкие орехи", image: "https://images.unsplash.com/photo-1622921908432-7f0cd3d25e8e?w=400&h=300&fit=crop", calories: 654, protein: 15, fat: 65, carbs: 14, per: "100г", category: "nuts" },
+            { name: "Кешью", image: "https://images.unsplash.com/photo-1585704032915-c3400ca199e7?w=400&h=300&fit=crop", calories: 553, protein: 18, fat: 44, carbs: 30, per: "100г", category: "nuts" },
+            { name: "Семена чиа", image: "https://images.unsplash.com/photo-1603569283847-aa295f0d016a?w=400&h=300&fit=crop", calories: 486, protein: 17, fat: 31, carbs: 42, per: "100г", category: "nuts" },
+            { name: "Арахис", image: "https://images.unsplash.com/photo-1582523628550-edb8b57e01ba?w=400&h=300&fit=crop", calories: 567, protein: 26, fat: 49, carbs: 16, per: "100г", category: "nuts" },
+
+            // Дополнительно
+            { name: "Авокадо", image: "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?w=400&h=300&fit=crop", calories: 160, protein: 2, fat: 15, carbs: 9, per: "100г", category: "vegetables" },
+            { name: "Оливковое масло", image: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=400&h=300&fit=crop", calories: 884, protein: 0, fat: 100, carbs: 0, per: "100мл", category: "nuts" },
+        ];
+
+        const weekMenu = {
+            1: {
+                breakfast: { time: "7:00-8:00", title: "Завтрак", calories: 450, items: ["Овсяная каша на воде с ягодами (200г)", "Омлет из 2 яиц", "Зеленый чай", "10г миндаля"] },
+                snack1: { time: "10:00-11:00", title: "Перекус", calories: 140, items: ["Греческий йогурт 2% (150г)", "Яблоко"] },
+                lunch: { time: "13:00-14:00", title: "Обед", calories: 520, items: ["Куриная грудка на гриле (150г)", "Бурый рис (100г сухого)", "Овощной салат с оливковым маслом", "Компот без сахара"] },
+                snack2: { time: "16:00-17:00", title: "Перекус", calories: 180, items: ["Творог 5% (100г)", "Горсть орехов (20г)"] },
+                dinner: { time: "19:00-20:00", title: "Ужин", calories: 350, items: ["Запеченная рыба (150г)", "Овощи на пару (брокколи, морковь)", "Салат из свежих овощей"] }
+            },
+            2: {
+                breakfast: { time: "7:00-8:00", title: "Завтрак", calories: 420, items: ["Творог 5% с бананом (150г + 1 банан)", "Цельнозерновой хлеб (2 кусочка)", "Кофе без сахара"] },
+                snack1: { time: "10:00-11:00", title: "Перекус", calories: 180, items: ["Протеиновый коктейль", "Груша"] },
+                lunch: { time: "13:00-14:00", title: "Обед", calories: 530, items: ["Индейка отварная (150г)", "Гречка (100г сухой)", "Овощной суп", "Салат из капусты"] },
+                snack2: { time: "16:00-17:00", title: "Перекус", calories: 160, items: ["Хлебцы (3 шт)", "Авокадо (½)"] },
+                dinner: { time: "19:00-20:00", title: "Ужин", calories: 450, items: ["Говядина тушеная (120г)", "Киноа (80г)", "Овощи гриль"] }
+            },
+            3: {
+                breakfast: { time: "7:00-8:00", title: "Завтрак", calories: 380, items: ["Яичница из 3 белков и 1 желтка", "Авокадо (½)", "Помидоры", "Зеленый чай"] },
+                snack1: { time: "10:00-11:00", title: "Перекус", calories: 220, items: ["Смузи из ягод и банана", "Горсть кешью (20г)"] },
+                lunch: { time: "13:00-14:00", title: "Обед", calories: 550, items: ["Лосось запеченный (150г)", "Батат (150г)", "Шпинат с чесноком", "Зеленый салат"] },
+                snack2: { time: "16:00-17:00", title: "Перекус", calories: 100, items: ["Кефир 1% (200мл)", "Отруби (1 ст.л.)"] },
+                dinner: { time: "19:00-20:00", title: "Ужин", calories: 350, items: ["Куриное филе (150г)", "Цветная капуста запеченная", "Огуречный салат"] }
+            },
+            4: {
+                breakfast: { time: "7:00-8:00", title: "Завтрак", calories: 480, items: ["Гранола домашняя (60г)", "Греческий йогурт (150г)", "Ягоды (100г)", "Мед (1 ч.л.)"] },
+                snack1: { time: "10:00-11:00", title: "Перекус", calories: 180, items: ["Яйцо вареное (2 шт)", "Огурец"] },
+                lunch: { time: "13:00-14:00", title: "Обед", calories: 540, items: ["Телятина на гриле (150г)", "Булгур (100г)", "Овощное рагу", "Зелень"] },
+                snack2: { time: "16:00-17:00", title: "Перекус", calories: 170, items: ["Творожная запеканка (150г)", "Яблоко"] },
+                dinner: { time: "19:00-20:00", title: "Ужин", calories: 280, items: ["Морепродукты (креветки, кальмары 150г)", "Салат с рукколой и помидорами черри", "Лимонный сок"] }
+            },
+            5: {
+                breakfast: { time: "7:00-8:00", title: "Завтрак", calories: 440, items: ["Сырники запеченные (150г)", "Сметана 10% (2 ст.л.)", "Ягоды", "Чай"] },
+                snack1: { time: "10:00-11:00", title: "Перекус", calories: 180, items: ["Банан", "Миндаль (15 шт)"] },
+                lunch: { time: "13:00-14:00", title: "Обед", calories: 510, items: ["Куриная грудка (150г)", "Перловка (100г)", "Овощи тушеные", "Салат из свеклы"] },
+                snack2: { time: "16:00-17:00", title: "Перекус", calories: 170, items: ["Протеиновый батончик", "Апельсин"] },
+                dinner: { time: "19:00-20:00", title: "Ужин", calories: 340, items: ["Треска на пару (150г)", "Спаржа", "Салат из свежих овощей с льняным маслом"] }
+            },
+            6: {
+                breakfast: { time: "7:00-8:00", title: "Завтрак", calories: 490, items: ["Омлет с овощами (3 яйца)", "Цельнозерновой тост", "Авокадо (½)", "Кофе"] },
+                snack1: { time: "10:00-11:00", title: "Перекус", calories: 160, items: ["Ряженка 2.5% (200мл)", "Ягоды (100г)"] },
+                lunch: { time: "13:00-14:00", title: "Обед", calories: 540, items: ["Индейка запеченная (150г)", "Дикий рис (100г)", "Овощи на гриле", "Зеленый салат"] },
+                snack2: { time: "16:00-17:00", title: "Перекус", calories: 170, items: ["Хумус (80г)", "Овощные палочки (морковь, сельдерей)"] },
+                dinner: { time: "19:00-20:00", title: "Ужин", calories: 380, items: ["Говядина тушеная с овощами (150г)", "Салат из зелени", "Травяной чай"] }
+            },
+            7: {
+                breakfast: { time: "7:00-8:00", title: "Завтрак", calories: 460, items: ["Блинчики из овсяной муки (3 шт)", "Творог (100г)", "Мед (1 ч.л.)", "Ягоды"] },
+                snack1: { time: "10:00-11:00", title: "Перекус", calories: 200, items: ["Смузи боул с гранолой", "Семена чиа"] },
+                lunch: { time: "13:00-14:00", title: "Обед", calories: 560, items: ["Куриное филе (150г)", "Паста из твердых сортов (100г)", "Томатный соус", "Салат Капрезе"] },
+                snack2: { time: "16:00-17:00", title: "Перекус", calories: 170, items: ["Натуральный йогурт (150г)", "Грецкие орехи (20г)"] },
+                dinner: { time: "19:00-20:00", title: "Ужин", calories: 250, items: ["Тунец консервированный в собственном соку (150г)", "Салат из огурцов и помидоров", "Оливковое масло"] }
+            }
+        };
+
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+            event.target.classList.add('active');
+            document.getElementById(tabName).classList.add('active');
+
+            if (tabName === 'menu') {
+                showDay(1);
+            } else if (tabName === 'products') {
+                displayProducts();
+            }
+        }
+
+        function showDay(day) {
+            document.querySelectorAll('.day-btn').forEach(btn => btn.classList.remove('active'));
+            if (event && event.target) {
+                event.target.classList.add('active');
+            } else {
+                document.querySelector('.day-btn').classList.add('active');
+            }
+
+            const menu = weekMenu[day];
+            let html = '<div class="meal-plan">';
+            let dayTotal = 0;
+
+            Object.values(menu).forEach(meal => {
+                dayTotal += meal.calories;
+                html += `
+                    <div class="meal">
+                        <div class="meal-title">${meal.title} <span class="meal-calories">${meal.calories} ккал</span></div>
+                        <div class="meal-time">${meal.time}</div>
+                        <ul class="meal-items">
+                            ${meal.items.map(item => `<li>${item}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            });
+
+            html += `<div class="day-total">Итого за день: ${dayTotal} ккал</div>`;
+            html += '</div>';
+
+            if (currentCalories > 0) {
+                const diff = currentCalories - dayTotal;
+                const diffPercent = Math.round((diff / currentCalories) * 100);
+                let diffMsg = '';
+
+                if (Math.abs(diffPercent) <= 5) {
+                    diffMsg = `<span style="color: #34c759;">✅ Отлично! Меню идеально подходит под вашу норму.</span>`;
+                } else if (diff > 0) {
+                    diffMsg = `<span style="color: #ff9500;">⚠️ Меню на ${diff} ккал меньше вашей нормы. Увеличьте порции или добавьте перекус.</span>`;
+                } else {
+                    diffMsg = `<span style="color: #ff3b30;">⚠️ Меню на ${Math.abs(diff)} ккал больше вашей нормы. Уменьшите порции.</span>`;
+                }
+
+                html += `
+                    <div class="info" style="margin-top: 20px;">
+                        <strong>📊 Ваша норма:</strong> ${currentCalories} ккал |
+                        Белки: ${currentProtein}г | Жиры: ${currentFat}г | Углеводы: ${currentCarbs}г<br><br>
+                        ${diffMsg}
+                    </div>
+                `;
+            }
+
+            document.getElementById('menuContent').innerHTML = html;
+        }
+
+        function displayProducts(filtered = productsDatabase) {
+            const grid = document.getElementById('productGrid');
+            let html = '';
+
+            filtered.forEach(product => {
+                html += `
+                    <div class="product-card" data-category="${product.category}">
+                        <div class="product-image">
+                            <img src="${product.image}" alt="${product.name}" loading="lazy">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-name">${product.name}</div>
+                            <div class="product-calories">${product.calories} ккал</div>
+                            <div class="product-macros">
+                                Б: ${product.protein}г | Ж: ${product.fat}г<br>
+                                У: ${product.carbs}г | ${product.per}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            grid.innerHTML = html || '<p style="text-align: center; padding: 40px; color: #999;">Продукты не найдены</p>';
+        }
+
+        function filterByCategory(category) {
+            currentCategory = category;
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            if (category === 'all') {
+                displayProducts(productsDatabase);
+            } else {
+                const filtered = productsDatabase.filter(p => p.category === category);
+                displayProducts(filtered);
+            }
+        }
+
+        function filterProducts() {
+            const searchTerm = document.getElementById('productSearch').value.toLowerCase();
+            let filtered = productsDatabase;
+
+            if (currentCategory !== 'all') {
+                filtered = filtered.filter(p => p.category === currentCategory);
+            }
+
+            if (searchTerm) {
+                filtered = filtered.filter(p => p.name.toLowerCase().includes(searchTerm));
+            }
+
+            displayProducts(filtered);
+        }
+
         document.getElementById('kbjuForm').addEventListener('submit', function(e) {
             e.preventDefault();
             calculateKBJU();
@@ -493,12 +1157,16 @@
             }
 
             const tdee = bmr * activity;
-
             const targetCalories = Math.round(tdee * (1 + goal));
 
             const proteinGrams = Math.round((targetCalories * 0.30) / 4);
             const fatGrams = Math.round((targetCalories * 0.25) / 9);
             const carbsGrams = Math.round((targetCalories * 0.45) / 4);
+
+            currentCalories = targetCalories;
+            currentProtein = proteinGrams;
+            currentFat = fatGrams;
+            currentCarbs = carbsGrams;
 
             document.getElementById('caloriesResult').textContent = targetCalories + ' ккал';
             document.getElementById('proteinResult').textContent = proteinGrams + ' г';
@@ -508,6 +1176,52 @@
             document.getElementById('tdeeResult').textContent = Math.round(tdee);
 
             document.getElementById('results').classList.add('show');
+
+            let recommendations = '<div class="info" style="margin-top: 20px;"><strong>💡 Рекомендации на основе ваших данных:</strong><br><br>';
+
+            if (goal < 0) {
+                recommendations += '🎯 <strong>Для снижения веса:</strong><br>';
+                recommendations += '• Придерживайтесь рассчитанной калорийности<br>';
+                recommendations += '• Выполняйте кардио упражнения 3-4 раза в неделю (вкладка "Упражнения")<br>';
+                recommendations += '• Добавьте силовые тренировки 2-3 раза в неделю<br>';
+                recommendations += '• Пейте достаточно воды (30-40 мл на кг веса)<br>';
+                recommendations += '• Делайте растяжку после тренировок (вкладка "Растяжка")<br>';
+                recommendations += '• Высыпайтесь (7-8 часов)<br>';
+                recommendations += '• Используйте меню на неделю для планирования питания<br>';
+            } else if (goal > 0) {
+                recommendations += '🎯 <strong>Для набора массы:</strong><br>';
+                recommendations += '• Соблюдайте профицит калорий<br>';
+                recommendations += '• Сосредоточьтесь на силовых упражнениях (вкладка "Упражнения")<br>';
+                recommendations += '• Тренируйтесь 4-5 раз в неделю<br>';
+                recommendations += '• Обязательно делайте растяжку для восстановления<br>';
+                recommendations += '• Увеличьте потребление белка<br>';
+                recommendations += '• Отдыхайте между тренировками<br>';
+                recommendations += '• Ежедневно выполняйте суставную гимнастику (вкладка "Суставы")<br>';
+            } else {
+                recommendations += '🎯 <strong>Для поддержания веса:</strong><br>';
+                recommendations += '• Поддерживайте баланс калорий<br>';
+                recommendations += '• Тренируйтесь 3-4 раза в неделю<br>';
+                recommendations += '• Сочетайте кардио и силовые нагрузки<br>';
+                recommendations += '• Регулярно делайте растяжку<br>';
+                recommendations += '• Следите за балансом БЖУ<br>';
+                recommendations += '• Выполняйте суставную гимнастику для здоровья суставов<br>';
+            }
+
+            if (activity <= 1.375) {
+                recommendations += '<br>⚠️ <strong>Низкая активность:</strong> Рекомендуется увеличить физическую активность для лучших результатов.<br>';
+            }
+
+            recommendations += '<br>📋 <strong>Общие советы:</strong><br>';
+            recommendations += '• Начинайте утро с суставной гимнастики (5-10 минут)<br>';
+            recommendations += '• Обязательно разминайтесь перед тренировками<br>';
+            recommendations += '• Заканчивайте тренировку растяжкой<br>';
+            recommendations += '• Ведите дневник питания<br>';
+            recommendations += '• Взвешивайтесь раз в неделю в одно и то же время<br>';
+            recommendations += '• Делайте замеры тела раз в 2 недели<br>';
+            recommendations += '• При необходимости корректируйте калорийность<br>';
+            recommendations += '</div>';
+
+            document.getElementById('results').innerHTML += recommendations;
 
             document.getElementById('results').scrollIntoView({
                 behavior: 'smooth',
