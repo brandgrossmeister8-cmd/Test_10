@@ -1185,8 +1185,61 @@
                 .map(option => option.value)
                 .filter(value => value !== 'none') : [];
 
+            const healthConditionNames = {
+                diabetes: 'Диабет / Предиабет',
+                hypertension: 'Гипертония',
+                gastritis: 'Гастрит / Язва желудка',
+                cholesterol: 'Высокий холестерин',
+                uric_acid: 'Повышенная мочевая кислота / Подагра',
+                kidney: 'Заболевания почек',
+                liver: 'Заболевания печени',
+                thyroid: 'Заболевания щитовидной железы',
+                allergy: 'Пищевые аллергии',
+                lactose: 'Непереносимость лактозы',
+                gluten: 'Целиакия / Непереносимость глютена'
+            };
+
             const menu = weekMenu[day];
-            let html = '<div class="meal-plan">';
+            let html = '';
+
+            // Display user's target parameters if calculated
+            if (currentCalories > 0) {
+                html += `
+                    <div class="info" style="background: #e3f2fd; border-left: 4px solid #2196f3; margin-bottom: 20px;">
+                        <strong style="color: #1565c0;">🎯 Ваши целевые показатели:</strong><br>
+                        <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 10px;">
+                            <span style="background: white; padding: 5px 12px; border-radius: 6px; font-weight: 600;">
+                                📊 Калории: <span style="color: #667eea;">${currentCalories} ккал</span>
+                            </span>
+                            <span style="background: white; padding: 5px 12px; border-radius: 6px; font-weight: 600;">
+                                🥩 Белки: <span style="color: #e74c3c;">${currentProtein}г</span>
+                            </span>
+                            <span style="background: white; padding: 5px 12px; border-radius: 6px; font-weight: 600;">
+                                🥑 Жиры: <span style="color: #f39c12;">${currentFat}г</span>
+                            </span>
+                            <span style="background: white; padding: 5px 12px; border-radius: 6px; font-weight: 600;">
+                                🌾 Углеводы: <span style="color: #3498db;">${currentCarbs}г</span>
+                            </span>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Display health conditions info if any selected
+            if (currentHealthConditions.length > 0) {
+                html += `
+                    <div class="info" style="background: #e8f5e9; border-left: 4px solid #4caf50; margin-bottom: 20px;">
+                        <strong style="color: #2e7d32;">🏥 Учтенные параметры здоровья:</strong><br>
+                        ${currentHealthConditions.map(condition =>
+                            `<span style="display: inline-block; background: white; padding: 3px 8px; border-radius: 4px; margin: 3px; font-size: 0.9em;">• ${healthConditionNames[condition]}</span>`
+                        ).join('')}
+                        <br><br>
+                        <small style="color: #555;">Продукты, противопоказанные при ваших заболеваниях, будут отмечены предупреждениями.</small>
+                    </div>
+                `;
+            }
+
+            html += '<div class="meal-plan">';
             let dayTotal = 0;
             let hasWarnings = false;
 
