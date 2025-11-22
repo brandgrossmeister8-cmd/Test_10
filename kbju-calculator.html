@@ -395,6 +395,15 @@
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
         }
 
+        .product-card.health-warning {
+            border: 2px solid #e74c3c;
+            opacity: 0.85;
+        }
+
+        .product-card.health-warning:hover {
+            opacity: 1;
+        }
+
         .product-image {
             width: 100%;
             height: 150px;
@@ -613,6 +622,27 @@
                 </select>
             </div>
 
+            <div class="form-group">
+                <label for="health">Заболевания и особенности здоровья</label>
+                <select id="health" multiple size="7" style="height: auto;">
+                    <option value="none" selected>Нет заболеваний</option>
+                    <option value="diabetes">Диабет / Предиабет</option>
+                    <option value="hypertension">Гипертония (высокое давление)</option>
+                    <option value="gastritis">Гастрит / Язва желудка</option>
+                    <option value="cholesterol">Высокий холестерин</option>
+                    <option value="uric_acid">Повышенная мочевая кислота / Подагра</option>
+                    <option value="kidney">Заболевания почек</option>
+                    <option value="liver">Заболевания печени</option>
+                    <option value="thyroid">Заболевания щитовидной железы</option>
+                    <option value="allergy">Пищевые аллергии</option>
+                    <option value="lactose">Непереносимость лактозы</option>
+                    <option value="gluten">Целиакия / Непереносимость глютена</option>
+                </select>
+                <small style="color: #666; font-size: 0.85em; margin-top: 5px; display: block;">
+                    Удерживайте Ctrl (Cmd на Mac) для выбора нескольких пунктов
+                </small>
+            </div>
+
             <button type="submit" class="calculate-btn">Рассчитать</button>
         </form>
 
@@ -684,8 +714,19 @@
             <h2 style="color: #6B8E23; margin-bottom: 20px;">База продуктов</h2>
 
             <div class="info" style="margin-bottom: 20px;">
-                <strong>💡 О клетчатке:</strong><br>
-                <em style="color: #666; font-size: 0.95em;">Клетчатка (пищевые волокна) - это неперевариваемые углеводы, которые необходимы для здоровья ЖКТ, контроля веса и нормализации уровня сахара в крови. Рекомендуемая норма: <strong>25-30 г в день</strong> для женщин и <strong>30-38 г в день</strong> для мужчин. Лучшие источники клетчатки отмечены ниже.</em>
+                <strong>📚 О макронутриентах:</strong><br><br>
+
+                <strong style="color: #e74c3c;">🥩 Белки (Протеины):</strong><br>
+                <em style="color: #666; font-size: 0.95em;">Строительный материал для мышц, костей, кожи и органов. Участвуют в иммунной защите, образовании гормонов и ферментов. Норма: <strong>1.2-2 г на кг веса</strong> (спортсменам больше). Калорийность: 4 ккал на 1г. Источники: мясо, рыба, яйца, молочные продукты, бобовые.</em><br><br>
+
+                <strong style="color: #f39c12;">🥑 Жиры (Липиды):</strong><br>
+                <em style="color: #666; font-size: 0.95em;">Источник энергии, защита органов, усвоение витаминов A, D, E, K. Важны для гормонального баланса и здоровья мозга. Норма: <strong>0.8-1 г на кг веса</strong> (25-35% от калорий). Калорийность: 9 ккал на 1г. Предпочтительны ненасыщенные жиры: орехи, авокадо, рыба, оливковое масло.</em><br><br>
+
+                <strong style="color: #3498db;">🌾 Углеводы:</strong><br>
+                <em style="color: #666; font-size: 0.95em;">Основной источник энергии для мозга и мышц. Сложные углеводы дают длительное насыщение. Норма: <strong>3-5 г на кг веса</strong> (40-50% от калорий). Калорийность: 4 ккал на 1г. Источники: крупы, овощи, фрукты, цельнозерновые продукты.</em><br><br>
+
+                <strong style="color: #27ae60;">🌿 Клетчатка (Пищевые волокна):</strong><br>
+                <em style="color: #666; font-size: 0.95em;">Неперевариваемые углеводы, необходимые для здоровья ЖКТ, контроля веса и нормализации уровня сахара в крови. Норма: <strong>25-30 г в день</strong> для женщин и <strong>30-38 г в день</strong> для мужчин. Продукты с высоким содержанием клетчатки отмечены значком 🌿.</em>
             </div>
 
             <input type="text" class="search-box" id="productSearch" placeholder="🔍 Поиск продуктов..." oninput="filterProducts()">
@@ -964,50 +1005,50 @@
 
         const productsDatabase = {
             protein: [
-                { name: "Куриная грудка", image: "https://source.unsplash.com/400x300/?watercolor,chicken,breast,food,art", calories: 165, protein: 31, fat: 3.6, carbs: 0, fiber: 0, per: "100г" },
-                { name: "Яйца", image: "https://source.unsplash.com/400x300/?watercolor,eggs,food,art", calories: 155, protein: 13, fat: 11, carbs: 1.1, fiber: 0, per: "100г" },
-                { name: "Лосось", image: "https://source.unsplash.com/400x300/?watercolor,salmon,fish,food,art", calories: 208, protein: 20, fat: 13, carbs: 0, fiber: 0, per: "100г" },
-                { name: "Тунец", image: "https://source.unsplash.com/400x300/?watercolor,tuna,fish,food,art", calories: 130, protein: 28, fat: 1.3, carbs: 0, fiber: 0, per: "100г" },
-                { name: "Индейка", image: "https://source.unsplash.com/400x300/?watercolor,turkey,meat,food,art", calories: 189, protein: 29, fat: 7, carbs: 0, fiber: 0, per: "100г" },
-                { name: "Говядина", image: "https://source.unsplash.com/400x300/?watercolor,beef,meat,food,art", calories: 250, protein: 26, fat: 15, carbs: 0, fiber: 0, per: "100г" },
-                { name: "Креветки", image: "https://source.unsplash.com/400x300/?watercolor,shrimp,seafood,art", calories: 99, protein: 24, fat: 0.3, carbs: 0.2, fiber: 0, per: "100г" },
-                { name: "Творог 5%", image: "https://source.unsplash.com/400x300/?watercolor,cottage,cheese,dairy,art", calories: 121, protein: 16, fat: 5, carbs: 3, fiber: 0, per: "100г" },
-                { name: "Йогурт греческий", image: "https://source.unsplash.com/400x300/?watercolor,yogurt,dairy,food,art", calories: 59, protein: 10, fat: 0.4, carbs: 3.6, fiber: 0, per: "100г" },
+                { name: "Куриная грудка", image: "https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=400&h=300&fit=crop", calories: 165, protein: 31, fat: 3.6, carbs: 0, fiber: 0, per: "100г" },
+                { name: "Яйца", image: "https://images.unsplash.com/photo-1518569656558-1f25e69d93d7?w=400&h=300&fit=crop", calories: 155, protein: 13, fat: 11, carbs: 1.1, fiber: 0, per: "100г" },
+                { name: "Лосось", image: "https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=400&h=300&fit=crop", calories: 208, protein: 20, fat: 13, carbs: 0, fiber: 0, per: "100г" },
+                { name: "Тунец", image: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=400&h=300&fit=crop", calories: 130, protein: 28, fat: 1.3, carbs: 0, fiber: 0, per: "100г" },
+                { name: "Индейка", image: "https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=400&h=300&fit=crop", calories: 189, protein: 29, fat: 7, carbs: 0, fiber: 0, per: "100г" },
+                { name: "Говядина", image: "https://images.unsplash.com/photo-1603048588665-791ca8eff207?w=400&h=300&fit=crop", calories: 250, protein: 26, fat: 15, carbs: 0, fiber: 0, per: "100г" },
+                { name: "Креветки", image: "https://images.unsplash.com/photo-1599084993091-1cb5c0721cc6?w=400&h=300&fit=crop", calories: 99, protein: 24, fat: 0.3, carbs: 0.2, fiber: 0, per: "100г" },
+                { name: "Творог 5%", image: "https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?w=400&h=300&fit=crop", calories: 121, protein: 16, fat: 5, carbs: 3, fiber: 0, per: "100г" },
+                { name: "Йогурт греческий", image: "https://images.unsplash.com/photo-1571212515416-fca2ce30f2a6?w=400&h=300&fit=crop", calories: 59, protein: 10, fat: 0.4, carbs: 3.6, fiber: 0, per: "100г" },
             ],
             fats: [
-                { name: "Авокадо", image: "https://source.unsplash.com/400x300/?watercolor,avocado,fruit,art", calories: 160, protein: 2, fat: 15, carbs: 9, fiber: 6.7, per: "100г" },
-                { name: "Оливковое масло", image: "https://source.unsplash.com/400x300/?watercolor,olive,oil,food,art", calories: 884, protein: 0, fat: 100, carbs: 0, fiber: 0, per: "100мл" },
-                { name: "Миндаль", image: "https://source.unsplash.com/400x300/?watercolor,almonds,nuts,art", calories: 579, protein: 21, fat: 50, carbs: 22, fiber: 12.5, per: "100г" },
-                { name: "Грецкие орехи", image: "https://source.unsplash.com/400x300/?watercolor,walnuts,nuts,art", calories: 654, protein: 15, fat: 65, carbs: 14, fiber: 6.7, per: "100г" },
-                { name: "Кешью", image: "https://source.unsplash.com/400x300/?watercolor,cashew,nuts,art", calories: 553, protein: 18, fat: 44, carbs: 30, fiber: 3.3, per: "100г" },
-                { name: "Семена чиа", image: "https://source.unsplash.com/400x300/?watercolor,chia,seeds,art", calories: 486, protein: 17, fat: 31, carbs: 42, fiber: 34.4, per: "100г" },
-                { name: "Арахис", image: "https://source.unsplash.com/400x300/?watercolor,peanuts,nuts,art", calories: 567, protein: 26, fat: 49, carbs: 16, fiber: 8.5, per: "100г" },
-                { name: "Сыр моцарелла", image: "https://source.unsplash.com/400x300/?watercolor,mozzarella,cheese,art", calories: 280, protein: 28, fat: 17, carbs: 3, fiber: 0, per: "100г" },
-                { name: "Сметана 10%", image: "https://source.unsplash.com/400x300/?watercolor,cream,dairy,food,art", calories: 115, protein: 3, fat: 10, carbs: 3, fiber: 0, per: "100г" },
+                { name: "Авокадо", image: "https://images.unsplash.com/photo-1601039641847-7857b994d704?w=400&h=300&fit=crop", calories: 160, protein: 2, fat: 15, carbs: 9, fiber: 6.7, per: "100г" },
+                { name: "Оливковое масло", image: "https://images.unsplash.com/photo-1608181831030-dc2713c788cc?w=400&h=300&fit=crop", calories: 884, protein: 0, fat: 100, carbs: 0, fiber: 0, per: "100мл" },
+                { name: "Миндаль", image: "https://images.unsplash.com/photo-1617561458774-a8f96b6f0cde?w=400&h=300&fit=crop", calories: 579, protein: 21, fat: 50, carbs: 22, fiber: 12.5, per: "100г" },
+                { name: "Грецкие орехи", image: "https://images.unsplash.com/photo-1580317046849-44f59ce5f57f?w=400&h=300&fit=crop", calories: 654, protein: 15, fat: 65, carbs: 14, fiber: 6.7, per: "100г" },
+                { name: "Кешью", image: "https://images.unsplash.com/photo-1618192774387-f430f64ee2e5?w=400&h=300&fit=crop", calories: 553, protein: 18, fat: 44, carbs: 30, fiber: 3.3, per: "100г" },
+                { name: "Семена чиа", image: "https://images.unsplash.com/photo-1601492310362-38cc8de66b45?w=400&h=300&fit=crop", calories: 486, protein: 17, fat: 31, carbs: 42, fiber: 34.4, per: "100г" },
+                { name: "Арахис", image: "https://images.unsplash.com/photo-1607609234512-e683293c2f3c?w=400&h=300&fit=crop", calories: 567, protein: 26, fat: 49, carbs: 16, fiber: 8.5, per: "100г" },
+                { name: "Сыр моцарелла", image: "https://images.unsplash.com/photo-1631670662959-c3535e6d8713?w=400&h=300&fit=crop", calories: 280, protein: 28, fat: 17, carbs: 3, fiber: 0, per: "100г" },
+                { name: "Сметана 10%", image: "https://images.unsplash.com/photo-1605522324893-75e6f8e3b212?w=400&h=300&fit=crop", calories: 115, protein: 3, fat: 10, carbs: 3, fiber: 0, per: "100г" },
             ],
             carbs: [
-                { name: "Овсянка", image: "https://source.unsplash.com/400x300/?watercolor,oatmeal,grain,art", calories: 389, protein: 17, fat: 6.9, carbs: 66, fiber: 10.6, per: "100г" },
-                { name: "Гречка", image: "https://source.unsplash.com/400x300/?watercolor,buckwheat,grain,art", calories: 343, protein: 13, fat: 3.4, carbs: 72, fiber: 10, per: "100г" },
-                { name: "Рис бурый", image: "https://source.unsplash.com/400x300/?watercolor,brown,rice,grain,art", calories: 370, protein: 7.9, fat: 2.9, carbs: 77, fiber: 3.5, per: "100г" },
-                { name: "Киноа", image: "https://source.unsplash.com/400x300/?watercolor,quinoa,grain,art", calories: 368, protein: 14, fat: 6, carbs: 64, fiber: 7, per: "100г" },
-                { name: "Макароны", image: "https://source.unsplash.com/400x300/?watercolor,pasta,food,art", calories: 371, protein: 13, fat: 1.5, carbs: 75, fiber: 3.2, per: "100г" },
-                { name: "Хлеб ц/з", image: "https://source.unsplash.com/400x300/?watercolor,bread,grain,art", calories: 247, protein: 13, fat: 4, carbs: 42, fiber: 7, per: "100г" },
-                { name: "Батат", image: "https://source.unsplash.com/400x300/?watercolor,sweet,potato,art", calories: 86, protein: 1.6, fat: 0.1, carbs: 20, fiber: 3, per: "100г" },
-                { name: "Брокколи", image: "https://source.unsplash.com/400x300/?watercolor,broccoli,vegetable,art", calories: 34, protein: 2.8, fat: 0.4, carbs: 7, fiber: 2.6, per: "100г" },
-                { name: "Шпинат", image: "https://source.unsplash.com/400x300/?watercolor,spinach,vegetable,art", calories: 23, protein: 2.9, fat: 0.4, carbs: 3.6, fiber: 2.2, per: "100г" },
-                { name: "Помидоры", image: "https://source.unsplash.com/400x300/?watercolor,tomato,vegetable,art", calories: 18, protein: 0.9, fat: 0.2, carbs: 3.9, fiber: 1.2, per: "100г" },
-                { name: "Огурцы", image: "https://source.unsplash.com/400x300/?watercolor,cucumber,vegetable,art", calories: 15, protein: 0.8, fat: 0.1, carbs: 3.6, fiber: 0.5, per: "100г" },
-                { name: "Перец болгарский", image: "https://source.unsplash.com/400x300/?watercolor,pepper,vegetable,art", calories: 27, protein: 1.3, fat: 0.3, carbs: 6, fiber: 2.1, per: "100г" },
-                { name: "Морковь", image: "https://source.unsplash.com/400x300/?watercolor,carrot,vegetable,art", calories: 41, protein: 0.9, fat: 0.2, carbs: 10, fiber: 2.8, per: "100г" },
-                { name: "Капуста", image: "https://source.unsplash.com/400x300/?watercolor,cabbage,vegetable,art", calories: 25, protein: 1.3, fat: 0.1, carbs: 5.8, fiber: 2.5, per: "100г" },
-                { name: "Яблоко", image: "https://source.unsplash.com/400x300/?watercolor,apple,fruit,art", calories: 52, protein: 0.3, fat: 0.2, carbs: 14, fiber: 2.4, per: "100г" },
-                { name: "Банан", image: "https://source.unsplash.com/400x300/?watercolor,banana,fruit,art", calories: 89, protein: 1.1, fat: 0.3, carbs: 23, fiber: 2.6, per: "100г" },
-                { name: "Апельсин", image: "https://source.unsplash.com/400x300/?watercolor,orange,fruit,art", calories: 47, protein: 0.9, fat: 0.1, carbs: 12, fiber: 2.4, per: "100г" },
-                { name: "Ягоды", image: "https://source.unsplash.com/400x300/?watercolor,berries,fruit,art", calories: 57, protein: 0.7, fat: 0.3, carbs: 14, fiber: 5.3, per: "100г" },
-                { name: "Груша", image: "https://source.unsplash.com/400x300/?watercolor,pear,fruit,art", calories: 57, protein: 0.4, fat: 0.1, carbs: 15, fiber: 3.1, per: "100г" },
-                { name: "Киви", image: "https://source.unsplash.com/400x300/?watercolor,kiwi,fruit,art", calories: 61, protein: 1.1, fat: 0.5, carbs: 15, fiber: 3, per: "100г" },
-                { name: "Молоко 2.5%", image: "https://source.unsplash.com/400x300/?watercolor,milk,dairy,art", calories: 52, protein: 2.8, fat: 2.5, carbs: 4.7, fiber: 0, per: "100мл" },
-                { name: "Кефир 1%", image: "https://source.unsplash.com/400x300/?watercolor,kefir,dairy,art", calories: 40, protein: 3, fat: 1, carbs: 4, fiber: 0, per: "100мл" },
+                { name: "Овсянка", image: "https://images.unsplash.com/photo-1574085733277-851d9d856a0a?w=400&h=300&fit=crop", calories: 389, protein: 17, fat: 6.9, carbs: 66, fiber: 10.6, per: "100г" },
+                { name: "Гречка", image: "https://images.unsplash.com/photo-1607672632458-9eb56696346b?w=400&h=300&fit=crop", calories: 343, protein: 13, fat: 3.4, carbs: 72, fiber: 10, per: "100г" },
+                { name: "Рис бурый", image: "https://images.unsplash.com/photo-1536304993881-ff6e9eefa2a6?w=400&h=300&fit=crop", calories: 370, protein: 7.9, fat: 2.9, carbs: 77, fiber: 3.5, per: "100г" },
+                { name: "Киноа", image: "https://images.unsplash.com/photo-1628197524841-50c1f4ed97b6?w=400&h=300&fit=crop", calories: 368, protein: 14, fat: 6, carbs: 64, fiber: 7, per: "100г" },
+                { name: "Макароны", image: "https://images.unsplash.com/photo-1551462147-37a42fa2d0b1?w=400&h=300&fit=crop", calories: 371, protein: 13, fat: 1.5, carbs: 75, fiber: 3.2, per: "100г" },
+                { name: "Хлеб ц/з", image: "https://images.unsplash.com/photo-1586444248902-2f64eddc13df?w=400&h=300&fit=crop", calories: 247, protein: 13, fat: 4, carbs: 42, fiber: 7, per: "100г" },
+                { name: "Батат", image: "https://images.unsplash.com/photo-1591205863714-b5d8c6dbb90c?w=400&h=300&fit=crop", calories: 86, protein: 1.6, fat: 0.1, carbs: 20, fiber: 3, per: "100г" },
+                { name: "Брокколи", image: "https://images.unsplash.com/photo-1628773822503-930a7eaecf80?w=400&h=300&fit=crop", calories: 34, protein: 2.8, fat: 0.4, carbs: 7, fiber: 2.6, per: "100г" },
+                { name: "Шпинат", image: "https://images.unsplash.com/photo-1606914469633-bd39206ea739?w=400&h=300&fit=crop", calories: 23, protein: 2.9, fat: 0.4, carbs: 3.6, fiber: 2.2, per: "100г" },
+                { name: "Помидоры", image: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=400&h=300&fit=crop", calories: 18, protein: 0.9, fat: 0.2, carbs: 3.9, fiber: 1.2, per: "100г" },
+                { name: "Огурцы", image: "https://images.unsplash.com/photo-1568584711271-ca18cb8bc1f9?w=400&h=300&fit=crop", calories: 15, protein: 0.8, fat: 0.1, carbs: 3.6, fiber: 0.5, per: "100г" },
+                { name: "Перец болгарский", image: "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?w=400&h=300&fit=crop", calories: 27, protein: 1.3, fat: 0.3, carbs: 6, fiber: 2.1, per: "100г" },
+                { name: "Морковь", image: "https://images.unsplash.com/photo-1447175008436-054170c2e979?w=400&h=300&fit=crop", calories: 41, protein: 0.9, fat: 0.2, carbs: 10, fiber: 2.8, per: "100г" },
+                { name: "Капуста", image: "https://images.unsplash.com/photo-1618164435735-413d3b066c9a?w=400&h=300&fit=crop", calories: 25, protein: 1.3, fat: 0.1, carbs: 5.8, fiber: 2.5, per: "100г" },
+                { name: "Яблоко", image: "https://images.unsplash.com/photo-1619546813926-a78fa6372cd2?w=400&h=300&fit=crop", calories: 52, protein: 0.3, fat: 0.2, carbs: 14, fiber: 2.4, per: "100г" },
+                { name: "Банан", image: "https://images.unsplash.com/photo-1603833665858-e61d17a86224?w=400&h=300&fit=crop", calories: 89, protein: 1.1, fat: 0.3, carbs: 23, fiber: 2.6, per: "100г" },
+                { name: "Апельсин", image: "https://images.unsplash.com/photo-1580052614034-c55d20bfee3b?w=400&h=300&fit=crop", calories: 47, protein: 0.9, fat: 0.1, carbs: 12, fiber: 2.4, per: "100г" },
+                { name: "Ягоды", image: "https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=400&h=300&fit=crop", calories: 57, protein: 0.7, fat: 0.3, carbs: 14, fiber: 5.3, per: "100г" },
+                { name: "Груша", image: "https://images.unsplash.com/photo-1615484477778-ca3b77940c25?w=400&h=300&fit=crop", calories: 57, protein: 0.4, fat: 0.1, carbs: 15, fiber: 3.1, per: "100г" },
+                { name: "Киви", image: "https://images.unsplash.com/photo-1618897996318-5a901fa6ca71?w=400&h=300&fit=crop", calories: 61, protein: 1.1, fat: 0.5, carbs: 15, fiber: 3, per: "100г" },
+                { name: "Молоко 2.5%", image: "https://images.unsplash.com/photo-1550583724-b2692b85b150?w=400&h=300&fit=crop", calories: 52, protein: 2.8, fat: 2.5, carbs: 4.7, fiber: 0, per: "100мл" },
+                { name: "Кефир 1%", image: "https://images.unsplash.com/photo-1563835796418-c4a1e6b4e8b0?w=400&h=300&fit=crop", calories: 40, protein: 3, fat: 1, carbs: 4, fiber: 0, per: "100мл" },
             ]
         };
 
@@ -1077,6 +1118,59 @@
             }
         }
 
+        // Function to check menu items for health warnings
+        function checkMenuItemWarnings(item, healthConditions) {
+            const warnings = [];
+
+            if (healthConditions.includes('diabetes')) {
+                if (item.match(/банан|мед|виноград|картофель|белый рис|белый хлеб|блинчик/i)) {
+                    warnings.push('⚠️ Диабет: высокий гликемический индекс');
+                }
+            }
+            if (healthConditions.includes('hypertension')) {
+                if (item.match(/тунец консервированный|колбас|сыр|соевый соус/i)) {
+                    warnings.push('⚠️ Гипертония: высокое содержание соли');
+                }
+            }
+            if (healthConditions.includes('gastritis')) {
+                if (item.match(/апельсин|лимон|помидор|томатный соус|кофе/i)) {
+                    warnings.push('⚠️ Гастрит: кислый продукт');
+                }
+            }
+            if (healthConditions.includes('cholesterol')) {
+                if (item.match(/желтк|яйц|сметан|сливочное масло|говядина/i)) {
+                    warnings.push('⚠️ Холестерин: ограничить животные жиры');
+                }
+            }
+            if (healthConditions.includes('uric_acid')) {
+                if (item.match(/говядина|телятина|свинина|лосось|тунец|морепродукты|креветки|кальмары|чечевиц|фасоль|нут|горох|грибы|шпинат/i)) {
+                    warnings.push('❌ Мочевая кислота: высокое содержание пуринов');
+                }
+            }
+            if (healthConditions.includes('kidney')) {
+                if (item.match(/банан|картофель|орехи|творог|йогурт|молоко|кефир|ряженка/i)) {
+                    warnings.push('⚠️ Почки: высокое содержание калия/фосфора');
+                }
+            }
+            if (healthConditions.includes('liver')) {
+                if (item.match(/говядина|грибы|сметан|сливочное масло/i)) {
+                    warnings.push('⚠️ Печень: ограничить жирные продукты');
+                }
+            }
+            if (healthConditions.includes('lactose')) {
+                if (item.match(/молоко|творог|йогурт|кефир|ряженка|сметан|сыр/i)) {
+                    warnings.push('❌ Содержит лактозу');
+                }
+            }
+            if (healthConditions.includes('gluten')) {
+                if (item.match(/хлеб|паста|блинчик|гранола|овсян/i)) {
+                    warnings.push('❌ Содержит глютен');
+                }
+            }
+
+            return warnings;
+        }
+
         function showDay(day) {
             document.querySelectorAll('.day-btn').forEach(btn => btn.classList.remove('active'));
             if (event && event.target) {
@@ -1085,9 +1179,16 @@
                 document.querySelector('.day-btn').classList.add('active');
             }
 
+            // Get current health conditions
+            const healthSelect = document.getElementById('health');
+            const currentHealthConditions = healthSelect ? Array.from(healthSelect.selectedOptions)
+                .map(option => option.value)
+                .filter(value => value !== 'none') : [];
+
             const menu = weekMenu[day];
             let html = '<div class="meal-plan">';
             let dayTotal = 0;
+            let hasWarnings = false;
 
             Object.values(menu).forEach(meal => {
                 dayTotal += meal.calories;
@@ -1096,7 +1197,14 @@
                         <div class="meal-title">${meal.title} <span class="meal-calories">${meal.calories} ккал</span></div>
                         <div class="meal-time">${meal.time}</div>
                         <ul class="meal-items">
-                            ${meal.items.map(item => `<li>${item}</li>`).join('')}
+                            ${meal.items.map(item => {
+                                const warnings = checkMenuItemWarnings(item, currentHealthConditions);
+                                if (warnings.length > 0) {
+                                    hasWarnings = true;
+                                    return `<li>${item} <span style="color: #e74c3c; font-size: 0.85em; margin-left: 5px;">${warnings.join(', ')}</span></li>`;
+                                }
+                                return `<li>${item}</li>`;
+                            }).join('')}
                         </ul>
                     </div>
                 `;
@@ -1104,6 +1212,17 @@
 
             html += `<div class="day-total">Итого за день: ${dayTotal} ккал</div>`;
             html += '</div>';
+
+            // Add health warnings summary if any
+            if (hasWarnings && currentHealthConditions.length > 0) {
+                html += `
+                    <div class="info" style="margin-top: 20px; background: #ffe6e6; border-left: 4px solid #e74c3c;">
+                        <strong style="color: #c0392b;">🏥 Внимание!</strong><br>
+                        Некоторые продукты в этом меню могут быть противопоказаны при ваших заболеваниях (отмечены предупреждениями).<br>
+                        <strong>Рекомендуется:</strong> замените отмеченные продукты на подходящие альтернативы или проконсультируйтесь с врачом-диетологом для составления персонального меню.
+                    </div>
+                `;
+            }
 
             if (currentCalories > 0) {
                 const diff = currentCalories - dayTotal;
@@ -1130,9 +1249,44 @@
             document.getElementById('menuContent').innerHTML = html;
         }
 
+        // Function to check if product should have health warning
+        function getHealthWarning(productName, healthConditions) {
+            if (!healthConditions || healthConditions.length === 0) return null;
+
+            const warnings = {
+                diabetes: ['Белый рис', 'Картофель', 'Банан', 'Виноград', 'Белый хлеб', 'Мед'],
+                hypertension: ['Сыр', 'Колбаса', 'Консервы', 'Соленая рыба'],
+                gastritis: ['Апельсин', 'Мандарин', 'Грейпфрут', 'Лимон', 'Помидор'],
+                cholesterol: ['Яйцо', 'Сливочное масло', 'Свинина', 'Говядина', 'Сыр', 'Сало'],
+                uric_acid: ['Свинина', 'Говядина', 'Телятина', 'Лосось', 'Тунец', 'Морепродукты', 'Креветки', 'Кальмары', 'Чечевица', 'Фасоль', 'Нут', 'Горох', 'Грибы', 'Шпинат'],
+                kidney: ['Банан', 'Картофель', 'Орехи', 'Чечевица', 'Фасоль', 'Молоко', 'Творог', 'Йогурт'],
+                liver: ['Свинина', 'Говядина', 'Сало', 'Сливочное масло', 'Грибы'],
+                lactose: ['Молоко', 'Творог', 'Йогурт', 'Сыр', 'Сливочное масло'],
+                gluten: ['Белый хлеб', 'Макароны', 'Овсянка']
+            };
+
+            for (let condition of healthConditions) {
+                const productWarnings = warnings[condition];
+                if (productWarnings) {
+                    for (let warning of productWarnings) {
+                        if (productName.includes(warning)) {
+                            return condition;
+                        }
+                    }
+                }
+            }
+            return null;
+        }
+
         function displayProducts(searchTerm = '') {
             const container = document.getElementById('productsByMacro');
             let html = '';
+
+            // Get current health conditions from form
+            const healthSelect = document.getElementById('health');
+            const currentHealthConditions = healthSelect ? Array.from(healthSelect.selectedOptions)
+                .map(option => option.value)
+                .filter(value => value !== 'none') : [];
 
             const macroBlocks = [
                 { key: 'protein', title: 'Белковые продукты', icon: '🥩', color: '#e74c3c' },
@@ -1162,10 +1316,40 @@
                         const isHighFiber = product.fiber >= 5;
                         const fiberBadge = isHighFiber ? '<span class="fiber-badge">Богат клетчаткой</span>' : '';
 
+                        // Check for health warnings
+                        const warningCondition = getHealthWarning(product.name, currentHealthConditions);
+                        const warningMessages = {
+                            diabetes: '⚠️ Осторожно при диабете',
+                            hypertension: '⚠️ Осторожно при гипертонии',
+                            gastritis: '⚠️ Осторожно при гастрите',
+                            cholesterol: '⚠️ Осторожно при высоком холестерине',
+                            uric_acid: '❌ Высокое содержание пуринов',
+                            kidney: '⚠️ Ограничить при заболеваниях почек',
+                            liver: '⚠️ Ограничить при заболеваниях печени',
+                            lactose: '❌ Содержит лактозу',
+                            gluten: '❌ Содержит глютен'
+                        };
+                        const healthWarning = warningCondition ?
+                            `<div style="background: #ffe6e6; color: #c0392b; padding: 5px; border-radius: 4px; font-size: 0.85em; margin-top: 5px; font-weight: bold;">${warningMessages[warningCondition]}</div>` : '';
+
+                        // Генерация уникального цвета для каждого продукта
+                        const colors = {
+                            protein: ['#ffb3ba', '#ffdfba', '#ffffba', '#baffc9', '#bae1ff'],
+                            fats: ['#d4a574', '#f4d03f', '#82e0aa', '#85c1e2', '#c39bd3'],
+                            carbs: ['#f8b88b', '#fad689', '#b8e994', '#81ecec', '#74b9ff']
+                        };
+                        const categoryColors = colors[block.key] || colors.protein;
+                        const colorIndex = Math.floor(Math.random() * categoryColors.length);
+                        const mainColor = categoryColors[colorIndex];
+
+                        const watercolorSvg = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='150' viewBox='0 0 200 150'%3E%3Cdefs%3E%3Cfilter id='watercolor'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.03' numOctaves='3'/%3E%3CfeColorMatrix type='saturate' values='0.3'/%3E%3CfeBlend mode='multiply'/%3E%3C/filter%3E%3C/defs%3E%3Crect width='200' height='150' fill='${mainColor.replace('#', '%23')}' opacity='0.3'/%3E%3Cellipse cx='100' cy='75' rx='60' ry='50' fill='${mainColor.replace('#', '%23')}' opacity='0.6' filter='url(%23watercolor)'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='0.3em' fill='%23333' font-size='14' font-weight='600' font-family='Arial'%3E${encodeURIComponent(product.name)}%3C/text%3E%3C/svg%3E`;
+
+                        const cardClass = warningCondition ? 'product-card health-warning' : (isHighFiber ? 'product-card high-fiber' : 'product-card');
+
                         html += `
-                            <div class="product-card ${isHighFiber ? 'high-fiber' : ''}">
+                            <div class="${cardClass}">
                                 <div class="product-image">
-                                    <img src="${product.image}" alt="${product.name}" loading="lazy" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22150%22%3E%3Crect fill=%22%23f0f0f0%22 width=%22200%22 height=%22150%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22%23999%22 font-size=%2214%22%3E${product.name}%3C/text%3E%3C/svg%3E'">
+                                    <img src="${watercolorSvg}" alt="${product.name}" loading="lazy">
                                 </div>
                                 <div class="product-info">
                                     <div class="product-name">${product.name} ${fiberBadge}</div>
@@ -1175,6 +1359,7 @@
                                         У: ${product.carbs}г | Кл: ${product.fiber}г<br>
                                         ${product.per}
                                     </div>
+                                    ${healthWarning}
                                 </div>
                             </div>
                         `;
@@ -1204,6 +1389,11 @@
             calculateKBJU();
         });
 
+        // Update products display when health conditions change
+        document.getElementById('health').addEventListener('change', function() {
+            displayProducts();
+        });
+
         function calculateKBJU() {
             const gender = document.querySelector('input[name="gender"]:checked').value;
             const age = parseInt(document.getElementById('age').value);
@@ -1211,6 +1401,12 @@
             const height = parseInt(document.getElementById('height').value);
             const activity = parseFloat(document.getElementById('activity').value);
             const goal = parseFloat(document.getElementById('goal').value);
+
+            // Get selected health conditions
+            const healthSelect = document.getElementById('health');
+            const selectedHealthConditions = Array.from(healthSelect.selectedOptions)
+                .map(option => option.value)
+                .filter(value => value !== 'none');
 
             let bmr;
             if (gender === 'male') {
@@ -1319,6 +1515,114 @@
 
             if (activity <= 1.375) {
                 recommendations += '<br>⚠️ <strong>Низкая активность:</strong> Рекомендуется увеличить физическую активность для лучших результатов.<br>';
+            }
+
+            // Add health-based recommendations
+            if (selectedHealthConditions.length > 0) {
+                recommendations += '<br>🏥 <strong>Рекомендации с учетом состояния здоровья:</strong><br>';
+
+                selectedHealthConditions.forEach(condition => {
+                    switch(condition) {
+                        case 'diabetes':
+                            recommendations += '<br><strong style="color: #e74c3c;">• Диабет / Предиабет:</strong><br>';
+                            recommendations += '&nbsp;&nbsp;- Выбирайте продукты с низким гликемическим индексом<br>';
+                            recommendations += '&nbsp;&nbsp;- Ограничьте быстрые углеводы (сахар, белый хлеб, сладости)<br>';
+                            recommendations += '&nbsp;&nbsp;- Предпочитайте цельнозерновые крупы, овощи, бобовые<br>';
+                            recommendations += '&nbsp;&nbsp;- Ешьте часто небольшими порциями (5-6 раз в день)<br>';
+                            recommendations += '&nbsp;&nbsp;- Избегайте: белый рис, картофель, выпечка, сладкие фрукты<br>';
+                            recommendations += '&nbsp;&nbsp;- Рекомендуются: гречка, овсянка, киноа, чечевица, некрахмалистые овощи<br>';
+                            break;
+                        case 'hypertension':
+                            recommendations += '<br><strong style="color: #e74c3c;">• Гипертония:</strong><br>';
+                            recommendations += '&nbsp;&nbsp;- Ограничьте потребление соли до 5 г в день<br>';
+                            recommendations += '&nbsp;&nbsp;- Избегайте соленых продуктов (колбасы, консервы, сыры)<br>';
+                            recommendations += '&nbsp;&nbsp;- Увеличьте потребление калия (бананы, авокадо, шпинат)<br>';
+                            recommendations += '&nbsp;&nbsp;- Ограничьте кофеин и алкоголь<br>';
+                            recommendations += '&nbsp;&nbsp;- Избегайте: соленья, копчености, фастфуд, соевый соус<br>';
+                            recommendations += '&nbsp;&nbsp;- Рекомендуются: свежие овощи и фрукты, рыба, курица без кожи<br>';
+                            break;
+                        case 'gastritis':
+                            recommendations += '<br><strong style="color: #e74c3c;">• Гастрит / Язва:</strong><br>';
+                            recommendations += '&nbsp;&nbsp;- Избегайте острых, кислых и жареных блюд<br>';
+                            recommendations += '&nbsp;&nbsp;- Питайтесь регулярно, не допускайте длительных перерывов<br>';
+                            recommendations += '&nbsp;&nbsp;- Предпочитайте вареные, тушеные, запеченные блюда<br>';
+                            recommendations += '&nbsp;&nbsp;- Ограничьте кофе, крепкий чай, газировку<br>';
+                            recommendations += '&nbsp;&nbsp;- Избегайте: цитрусовые, томаты, острые специи, жареное мясо<br>';
+                            recommendations += '&nbsp;&nbsp;- Рекомендуются: каши на воде, отварное мясо, бананы, тыква<br>';
+                            break;
+                        case 'cholesterol':
+                            recommendations += '<br><strong style="color: #e74c3c;">• Высокий холестерин:</strong><br>';
+                            recommendations += '&nbsp;&nbsp;- Ограничьте насыщенные жиры (жирное мясо, сливочное масло)<br>';
+                            recommendations += '&nbsp;&nbsp;- Избегайте трансжиров (маргарин, фастфуд)<br>';
+                            recommendations += '&nbsp;&nbsp;- Увеличьте потребление омега-3 (рыба, льняное масло)<br>';
+                            recommendations += '&nbsp;&nbsp;- Ешьте больше клетчатки (овсянка, яблоки, бобовые)<br>';
+                            recommendations += '&nbsp;&nbsp;- Избегайте: жирное мясо, сало, яичные желтки, субпродукты<br>';
+                            recommendations += '&nbsp;&nbsp;- Рекомендуются: лосось, авокадо, орехи, овсянка, оливковое масло<br>';
+                            break;
+                        case 'uric_acid':
+                            recommendations += '<br><strong style="color: #e74c3c;">• Повышенная мочевая кислота / Подагра:</strong><br>';
+                            recommendations += '&nbsp;&nbsp;- Ограничьте продукты с высоким содержанием пуринов<br>';
+                            recommendations += '&nbsp;&nbsp;- Пейте много воды (2-3 литра в день) для выведения мочевой кислоты<br>';
+                            recommendations += '&nbsp;&nbsp;- Ограничьте белок до 1 г на кг веса<br>';
+                            recommendations += '&nbsp;&nbsp;- Исключите алкоголь, особенно пиво<br>';
+                            recommendations += '&nbsp;&nbsp;- Избегайте: красное мясо, субпродукты, морепродукты, жирная рыба, бобовые, грибы, шпинат<br>';
+                            recommendations += '&nbsp;&nbsp;- Ограничьте: курицу, индейку, рыбу (не более 100г 2-3 раза в неделю)<br>';
+                            recommendations += '&nbsp;&nbsp;- Рекомендуются: нежирные молочные продукты, яйца, овощи, фрукты, цельнозерновые<br>';
+                            recommendations += '&nbsp;&nbsp;- Полезны: вишня, черешня (снижают уровень мочевой кислоты)<br>';
+                            break;
+                        case 'kidney':
+                            recommendations += '<br><strong style="color: #e74c3c;">• Заболевания почек:</strong><br>';
+                            recommendations += '&nbsp;&nbsp;- Ограничьте белок до 0.6-0.8 г на кг веса (консультация врача!)<br>';
+                            recommendations += '&nbsp;&nbsp;- Снизьте потребление калия и фосфора<br>';
+                            recommendations += '&nbsp;&nbsp;- Ограничьте соль и жидкость по рекомендации врача<br>';
+                            recommendations += '&nbsp;&nbsp;- Избегайте: бананы, картофель, орехи, бобовые, молочные продукты<br>';
+                            recommendations += '&nbsp;&nbsp;- Рекомендуются: рис, огурцы, яблоки, капуста (в умеренных количествах)<br>';
+                            recommendations += '&nbsp;&nbsp;- ⚠️ Обязательно проконсультируйтесь с нефрологом!<br>';
+                            break;
+                        case 'liver':
+                            recommendations += '<br><strong style="color: #e74c3c;">• Заболевания печени:</strong><br>';
+                            recommendations += '&nbsp;&nbsp;- Ограничьте жиры, особенно животные<br>';
+                            recommendations += '&nbsp;&nbsp;- Исключите алкоголь полностью<br>';
+                            recommendations += '&nbsp;&nbsp;- Избегайте жареного, копченого, острого<br>';
+                            recommendations += '&nbsp;&nbsp;- Увеличьте потребление клетчатки<br>';
+                            recommendations += '&nbsp;&nbsp;- Избегайте: жирное мясо, сало, грибы, субпродукты, шоколад<br>';
+                            recommendations += '&nbsp;&nbsp;- Рекомендуются: нежирное мясо, творог, овсянка, тыква, морковь<br>';
+                            break;
+                        case 'thyroid':
+                            recommendations += '<br><strong style="color: #e74c3c;">• Заболевания щитовидной железы:</strong><br>';
+                            recommendations += '&nbsp;&nbsp;- При гипотиреозе: увеличьте йод (морепродукты, йодированная соль)<br>';
+                            recommendations += '&nbsp;&nbsp;- При гипертиреозе: ограничьте йод<br>';
+                            recommendations += '&nbsp;&nbsp;- Ешьте селен (бразильские орехи, рыба)<br>';
+                            recommendations += '&nbsp;&nbsp;- При гипотиреозе избегайте: сою, капусту в больших количествах<br>';
+                            recommendations += '&nbsp;&nbsp;- Рекомендуются: морская рыба, морская капуста, яйца, орехи<br>';
+                            recommendations += '&nbsp;&nbsp;- ⚠️ Обязательна консультация эндокринолога!<br>';
+                            break;
+                        case 'allergy':
+                            recommendations += '<br><strong style="color: #e74c3c;">• Пищевые аллергии:</strong><br>';
+                            recommendations += '&nbsp;&nbsp;- Исключите все продукты-аллергены<br>';
+                            recommendations += '&nbsp;&nbsp;- Ведите пищевой дневник<br>';
+                            recommendations += '&nbsp;&nbsp;- Читайте состав всех продуктов<br>';
+                            recommendations += '&nbsp;&nbsp;- Частые аллергены: орехи, морепродукты, яйца, молоко, цитрусовые<br>';
+                            recommendations += '&nbsp;&nbsp;- ⚠️ Проконсультируйтесь с аллергологом для выявления конкретных аллергенов<br>';
+                            break;
+                        case 'lactose':
+                            recommendations += '<br><strong style="color: #e74c3c;">• Непереносимость лактозы:</strong><br>';
+                            recommendations += '&nbsp;&nbsp;- Исключите молоко и молочные продукты<br>';
+                            recommendations += '&nbsp;&nbsp;- Используйте безлактозные альтернативы<br>';
+                            recommendations += '&nbsp;&nbsp;- Компенсируйте кальций из других источников<br>';
+                            recommendations += '&nbsp;&nbsp;- Избегайте: молоко, сливки, мороженое, йогурт, сыр<br>';
+                            recommendations += '&nbsp;&nbsp;- Рекомендуются: миндальное/соевое молоко, твердые сыры (низкая лактоза), брокколи, кунжут<br>';
+                            break;
+                        case 'gluten':
+                            recommendations += '<br><strong style="color: #e74c3c;">• Целиакия / Непереносимость глютена:</strong><br>';
+                            recommendations += '&nbsp;&nbsp;- Полностью исключите глютен (пшеница, рожь, ячмень)<br>';
+                            recommendations += '&nbsp;&nbsp;- Читайте этикетки - глютен может быть скрытым<br>';
+                            recommendations += '&nbsp;&nbsp;- Избегайте перекрестного загрязнения при готовке<br>';
+                            recommendations += '&nbsp;&nbsp;- Избегайте: хлеб, макароны, печенье, пиво, соевый соус<br>';
+                            recommendations += '&nbsp;&nbsp;- Рекомендуются: рис, гречка, киноа, кукуруза, картофель, бобовые<br>';
+                            break;
+                    }
+                });
             }
 
             recommendations += '<br>📋 <strong>Общие советы:</strong><br>';
